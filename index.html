@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEISMOGRAPH — LLM Drift Defense for production AI teams</title>
+<meta name="description" content="An early-warning service for silent LLM provider drift. When a model API quietly changes underneath you, we catch it before your users do. Free Drift Exposure Scan; fixed-price Drift Baseline.">
+<style>
+  :root{
+    --bg:#0a0b10; --panel:#12141c; --panel-2:#161925;
+    --line:#222637; --text:#e7e9f0; --muted:#9aa0b4; --soft:#c3c7d6;
+    --accent:#8a7bff; --accent-2:#5ad1c4; --good:#3ddc97;
+    --maxw:920px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .eyebrow{font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-2); font-weight:600}
+  h1{font-size:clamp(2rem,5vw,3.1rem); line-height:1.12; margin:.4em 0 .3em; letter-spacing:-.02em}
+  h2{font-size:clamp(1.5rem,3.5vw,2rem); margin:0 0 .2em; letter-spacing:-.01em}
+  h3{font-size:1.06rem; margin:0 0 .3em}
+  p{color:var(--soft)}
+  .lead{font-size:1.15rem; color:var(--soft)}
+  section{padding:62px 0; border-top:1px solid var(--line)}
+  .topbar{display:flex; justify-content:space-between; align-items:center; padding:18px 0; font-size:.92rem}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.02em}
+  .dot{width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent)}
+  .topbar .meta{color:var(--muted); font-size:.82rem}
+  .btn{display:inline-block; padding:13px 22px; border-radius:10px; font-weight:600; font-size:.97rem; border:1px solid transparent; cursor:pointer}
+  .btn-primary{background:var(--accent); color:#0a0b10}
+  .btn-primary:hover{background:#a097ff; text-decoration:none}
+  .btn-ghost{border-color:var(--line); color:var(--text); background:var(--panel)}
+  .btn-ghost:hover{border-color:var(--accent); text-decoration:none}
+  .btns{display:flex; gap:12px; flex-wrap:wrap; margin-top:26px}
+  .hero{padding-top:34px}
+  .hero .sub{max-width:680px}
+  .grid{display:grid; gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:760px){.g3,.g2{grid-template-columns:1fr}}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:22px}
+  .stat .n{font-size:2.2rem; font-weight:700; letter-spacing:-.02em; color:#fff}
+  .stat .l{color:var(--muted); font-size:.92rem; margin-top:4px}
+  .quote{border-left:3px solid var(--accent); padding:6px 0 6px 18px; color:var(--soft); font-size:1.04rem}
+  .price{font-size:1.9rem; font-weight:700; color:#fff; margin:.1em 0}
+  .price small{font-size:.95rem; color:var(--muted); font-weight:500}
+  .tag{display:inline-block; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--accent-2); border:1px solid var(--line); border-radius:999px; padding:3px 10px; margin-bottom:8px}
+  ul.check{list-style:none; padding:0; margin:14px 0 0}
+  ul.check li{position:relative; padding-left:24px; margin:8px 0; color:var(--soft); font-size:.96rem}
+  ul.check li::before{content:"✓"; position:absolute; left:0; color:var(--good); font-weight:700}
+  .faq h3{margin-top:22px}
+  .faq p{margin:.2em 0 0}
+  .founder{display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap}
+  .avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.5rem;color:#0a0b10;flex:0 0 auto}
+  .footcta{text-align:center; padding:72px 0}
+  .footcta h2{margin-bottom:.3em}
+  footer{border-top:1px solid var(--line); padding:26px 0; color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px}
+  .links a{color:var(--muted); margin-left:16px}
+  .note{color:var(--muted); font-size:.86rem}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand"><span class="dot"></span> SEISMOGRAPH</div>
+    <div class="meta mono">Aarhus, DK · LLM Drift Defense</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="wrap hero">
+  <div class="eyebrow">Early-warning for silent LLM provider drift</div>
+  <h1>Your product runs on a model you don't control.<br>We catch it the day it changes — before your users do.</h1>
+  <p class="lead sub">Providers ship silent model changes with no version bump and no changelog. Same 200 OK, same latency — but JSON fidelity slips and outputs drift. Standard monitoring is blind to it. I build the early-warning layer that isn't.</p>
+  <div class="btns">
+    <a class="btn btn-primary" href="#start">Request a free Drift Exposure Scan</a>
+    <a class="btn btn-ghost" href="https://seismograph-weather.onrender.com/dashboard" target="_blank" rel="noopener">See the live dashboard →</a>
+  </div>
+  <p class="note" style="margin-top:14px">Open-source engine · Apache-2.0 · privacy-preserving by design · you own every result.</p>
+</div>
+
+<!-- PROOF -->
+<section id="proof">
+  <div class="wrap">
+    <div class="eyebrow">Proof of process</div>
+    <h2>Not a claim. A receipt.</h2>
+    <p class="lead" style="max-width:680px">Two-person teams pitch with a deck. I pitch with a reproducible, seeded backtest you can re-run yourself.</p>
+    <div class="grid g3" style="margin:26px 0">
+      <div class="card stat"><div class="n">38 days</div><div class="l">Caught the Claude 3.5 Sonnet silent degradation before the provider's official postmortem — during the 0.8% misrouting window, before user-visible symptoms.</div></div>
+      <div class="card stat"><div class="n">4 models</div><div class="l">Live public &ldquo;model weather&rdquo; dashboard, refreshed continuously. No login — open it right now.</div></div>
+      <div class="card stat"><div class="n">107 tests</div><div class="l">Green test suite, change-point (CUSUM) detection, audit-grade evidence export. Engine is open-source and auditable.</div></div>
+    </div>
+    <p class="quote">Detection occurred during the 0.8% misrouting window — 38 days before the official postmortem and 19 days before the load-balancer escalation became visible. The methodology is hash-committed, so the next call is a prediction, not a postmortem.</p>
+    <p style="margin-top:18px">
+      Evidence:
+      <a href="https://seismograph-weather.onrender.com/dashboard" target="_blank" rel="noopener">live dashboard</a> ·
+      <a href="https://github.com/Tania-coder/SEISMOGRAPH" target="_blank" rel="noopener">open-source engine</a> ·
+      <span class="mono">pip install seismograph-probe</span>
+    </p>
+  </div>
+</section>
+
+<!-- OFFER -->
+<section id="work">
+  <div class="wrap">
+    <div class="eyebrow">How we work</div>
+    <h2>Start free. Scale only if it's worth it.</h2>
+    <p class="lead" style="max-width:680px">Flat pricing, concrete deliverables, fixed timelines. No open-ended &ldquo;let's chat&rdquo; retainers to start.</p>
+
+    <div class="grid g3" style="margin:26px 0">
+      <div class="card">
+        <span class="tag">Start here</span>
+        <h3>Drift Exposure Scan</h3>
+        <div class="price">Free</div>
+        <p class="note">~48 hours · no system access</p>
+        <ul class="check">
+          <li>Send me your model stack (which APIs you depend on)</li>
+          <li>I map where a silent change would hit you first</li>
+          <li>You get your top-3 drift exposures + the metrics to watch</li>
+        </ul>
+        <p class="note" style="margin-top:14px">Zero risk. You leave with a watchlist worth more than the time it took.</p>
+      </div>
+
+      <div class="card" style="border-color:var(--accent)">
+        <span class="tag" style="color:var(--accent)">Most popular</span>
+        <h3>Drift Baseline</h3>
+        <div class="price">€2,500 <small>flat</small></div>
+        <p class="note">~1 week · reviewable deliverable</p>
+        <ul class="check">
+          <li>Canary probes stood up on your real model tuples</li>
+          <li>Behavioral baselines + CUSUM thresholds tuned to your traffic</li>
+          <li>Written exposure report + a concrete alerting plan (Slack/PagerDuty/webhook)</li>
+          <li>You own everything; nothing proprietary leaves your perimeter</li>
+        </ul>
+        <a class="btn btn-primary" style="margin-top:16px" href="#start">Book a Baseline</a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Ongoing</span>
+        <h3>Drift Desk</h3>
+        <div class="price">€3–6k <small>/ month</small></div>
+        <p class="note">standing early-warning line</p>
+        <ul class="check">
+          <li>Continuous watch across your model dependencies</li>
+          <li>A heads-up the moment a provider shifts — plus a monthly &ldquo;model weather&rdquo; briefing</li>
+          <li>Priority response when a provider incident hits</li>
+        </ul>
+        <p class="note" style="margin-top:14px">Cheaper than one bad week in production.</p>
+      </div>
+    </div>
+    <p class="note">Need it built into your stack and handed over working? A full <strong>Proof-of-Process Build</strong> (in-VPC probe fleet wired to your alerting, runbook, handover) is scoped per engagement — ask in your scan.</p>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section id="safety">
+  <div class="wrap">
+    <div class="eyebrow">Built for teams that can't afford a silent break</div>
+    <h2>Privacy-preserving by design.</h2>
+    <div class="grid g2" style="margin-top:24px">
+      <div class="card"><h3>No raw prompts or outputs. Ever.</h3><p>Only derived, non-reversible features cross the boundary — token counts, a JSON-valid flag, SHA-256 hashes. Raw text is never stored or transmitted.</p></div>
+      <div class="card"><h3>Differential privacy on every metric.</h3><p>Numeric signals carry Laplace DP noise with a tracked epsilon budget. Aggregated, anonymised, defensible.</p></div>
+      <div class="card"><h3>Runs in your VPC.</h3><p>Probes deploy inside your perimeter. Your data never depends on my infrastructure. Audit-grade evidence export for compliance.</p></div>
+      <div class="card"><h3>Structurally neutral.</h3><p>I don't sell you a model, so I have no reason to tell you it's fine. The engine is Apache-2.0 and auditable line by line.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq">
+  <div class="wrap">
+    <div class="eyebrow">FAQ</div>
+    <h2>Straight answers.</h2>
+
+    <h3>How is this different from Datadog / LangSmith / eval tools?</h3>
+    <p>App-level observability tells you <em>your</em> outputs got worse. It can't tell you <em>whether the model itself changed</em> — and it's often channel-conflicted (it sells to the providers it would have to indict). SEISMOGRAPH watches the provider side, neutrally, across time.</p>
+
+    <h3>What do I actually get?</h3>
+    <p>The free scan: your top-3 drift exposures within ~48h. The Baseline: live canary probes, tuned thresholds, a written report, and an alerting plan — a reviewable deliverable in about a week, not an open-ended retainer.</p>
+
+    <h3>Is my data safe?</h3>
+    <p>Raw prompts and outputs never leave your perimeter — only DP-noised aggregate features. Probes run in your VPC. You own every artifact. Full technical detail is in the open-source repo.</p>
+
+    <h3>Why should I trust the detection?</h3>
+    <p>Because it's falsifiable. The 38-day Claude 3.5 Sonnet call was made on a seeded, reproducible backtest you can re-run. The methodology is hash-committed up front.</p>
+
+    <h3>What isn't ready yet?</h3>
+    <p>Honest answer: the public network effect (cross-org quorum) compounds with adoption and is early. Today the value is the in-VPC early-warning layer and the neutral monitoring — which stand on their own. I'd rather tell you that than oversell it.</p>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section id="founder">
+  <div class="wrap">
+    <div class="eyebrow">Built by</div>
+    <div class="founder" style="margin-top:18px">
+      <div class="avatar">TR</div>
+      <div style="flex:1; min-width:260px">
+        <h3 style="font-size:1.25rem">Tetiana Radchenko</h3>
+        <p>AI infrastructure / backend engineer based in Aarhus, Denmark. I built SEISMOGRAPH from scratch to solve the most under-monitored failure mode in production AI: silent, provider-side model drift. Every engagement ships under my personal sign-off.</p>
+        <p class="links" style="margin-top:6px">
+          <a href="https://github.com/Tania-coder" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/tania-radchenko-dev" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="mailto:tatyan.radchenko@gmail.com">Email</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOT CTA -->
+<div class="footcta" id="start">
+  <div class="wrap">
+    <h2>One free scan tells you if it's worth your time.</h2>
+    <p class="lead" style="max-width:600px;margin:0 auto 8px">Send me the model APIs you depend on. Within ~48 hours you get your top-3 silent-drift exposures and the metrics that move first — plus a fixed quote if you want the Baseline.</p>
+    <div class="btns" style="justify-content:center">
+      <a class="btn btn-primary" href="mailto:tatyan.radchenko@gmail.com?subject=Drift%20Exposure%20Scan&body=Hi%20Tetiana%2C%20here%20is%20our%20model%20stack%3A%0A%0A-%20">Request your free Drift Exposure Scan</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <footer>
+    <div>© 2026 SEISMOGRAPH · Tetiana Radchenko · Aarhus, DK</div>
+    <div class="links">
+      <a href="https://seismograph-weather.onrender.com/dashboard" target="_blank" rel="noopener">Live demo</a>
+      <a href="https://github.com/Tania-coder/SEISMOGRAPH" target="_blank" rel="noopener">GitHub</a>
+      <a href="mailto:tatyan.radchenko@gmail.com">Contact</a>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
