@@ -95,7 +95,7 @@
 <!-- HERO -->
 <div class="wrap hero">
   <div class="eyebrow">Early-warning for silent LLM provider drift</div>
-  <h1>Your product runs on a model you don't control.<br>We catch it the day it changes — before your users do.</h1>
+  <h1>Your LLM didn't get worse.<br>It changed — and nobody told you.</h1>
   <p class="lead sub">Providers ship silent model changes with no version bump and no changelog. Same 200 OK, same latency — but JSON fidelity slips and outputs drift. Standard monitoring is blind to it. I build the early-warning layer that isn't.</p>
   <div class="btns">
     <a class="btn btn-primary" href="#start">Request a free Drift Exposure Scan</a>
@@ -111,11 +111,11 @@
     <h2>Not a claim. A receipt.</h2>
     <p class="lead" style="max-width:680px">Two-person teams pitch with a deck. I pitch with a reproducible, seeded backtest you can re-run yourself.</p>
     <div class="grid g3" style="margin:26px 0">
-      <div class="card stat"><div class="n">38 days</div><div class="l">Caught the Claude 3.5 Sonnet silent degradation before the provider's official postmortem — during the 0.8% misrouting window, before user-visible symptoms.</div></div>
+      <div class="card stat"><div class="n">38 days</div><div class="l">Flagged the Claude Sonnet 4 silent degradation before the provider's official postmortem — reproducible backtest, during the 0.8% misrouting window, before user-visible symptoms.</div></div>
       <div class="card stat"><div class="n">4 models</div><div class="l">Live public &ldquo;model weather&rdquo; dashboard, refreshed continuously. No login — open it right now.</div></div>
-      <div class="card stat"><div class="n">107 tests</div><div class="l">Green test suite, change-point (CUSUM) detection, audit-grade evidence export. Engine is open-source and auditable.</div></div>
+      <div class="card stat"><div class="n">122 tests</div><div class="l">Green test suite, change-point (CUSUM) detection, audit-grade evidence export. Engine is open-source and auditable.</div></div>
     </div>
-    <p class="quote">Detection occurred during the 0.8% misrouting window — 38 days before the official postmortem and 19 days before the load-balancer escalation became visible. The methodology is hash-committed, so the next call is a prediction, not a postmortem.</p>
+    <p class="quote">In the backtest, detection occurred during the 0.8% misrouting window — 38 days before the official postmortem and 19 days before the escalation became visible to users. The methodology is hash-committed, so the next call is a prediction, not a postmortem.</p>
     <p style="margin-top:18px">
       Evidence:
       <a href="https://seismograph-weather.onrender.com/dashboard" target="_blank" rel="noopener">live dashboard</a> ·
@@ -207,7 +207,7 @@
     <p>Raw prompts and outputs never leave your perimeter — only DP-noised aggregate features. Probes run in your VPC. You own every artifact. Full technical detail is in the open-source repo.</p>
 
     <h3>Why should I trust the detection?</h3>
-    <p>Because it's falsifiable. The 38-day Claude 3.5 Sonnet call was made on a seeded, reproducible backtest you can re-run. The methodology is hash-committed up front.</p>
+    <p>Because it's falsifiable. The 38-day Claude Sonnet 4 call was made on a seeded, reproducible backtest you can re-run. The methodology is hash-committed up front.</p>
 
     <h3>What isn't ready yet?</h3>
     <p>Honest answer: the public network effect (cross-org quorum) compounds with adoption and is early. Today the value is the in-VPC early-warning layer and the neutral monitoring — which stand on their own. I'd rather tell you that than oversell it.</p>
