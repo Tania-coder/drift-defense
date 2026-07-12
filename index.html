@@ -16,6 +16,24 @@
 <meta name="twitter:title" content="SEISMOGRAPH — LLM Drift Defense">
 <meta name="twitter:description" content="Early-warning for silent LLM provider drift. Free Drift Exposure Scan; fixed-price Drift Baseline.">
 <meta name="twitter:image" content="https://tania-coder.github.io/drift-defense/dashboard.png">
+<link rel="canonical" href="https://tania-coder.github.io/drift-defense/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "SEISMOGRAPH — LLM Drift Defense",
+  "description": "Early-warning service for silent LLM provider drift. Free Drift Exposure Scan; fixed-price Drift Baseline; ongoing Drift Desk.",
+  "url": "https://tania-coder.github.io/drift-defense/",
+  "founder": {"@type": "Person", "name": "Tetiana Radchenko"},
+  "areaServed": "Worldwide",
+  "address": {"@type": "PostalAddress", "addressLocality": "Aarhus", "addressCountry": "DK"},
+  "makesOffer": [
+    {"@type": "Offer", "name": "Drift Exposure Scan", "price": "0", "priceCurrency": "EUR"},
+    {"@type": "Offer", "name": "Drift Baseline", "price": "2500", "priceCurrency": "EUR"},
+    {"@type": "Offer", "name": "Drift Desk", "priceSpecification": {"@type": "PriceSpecification", "minPrice": 3000, "maxPrice": 6000, "priceCurrency": "EUR", "unitText": "MONTH"}}
+  ]
+}
+</script>
 <style>
   :root{
     --bg:#0a0b10; --panel:#12141c; --panel-2:#161925;
@@ -88,7 +106,10 @@
 <div class="wrap">
   <div class="topbar">
     <div class="brand"><span class="dot"></span> SEISMOGRAPH</div>
-    <div class="meta mono">Aarhus, DK · LLM Drift Defense</div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="meta mono">Aarhus, DK · LLM Drift Defense</div>
+      <a class="btn btn-primary" style="padding:8px 14px;font-size:.85rem" href="#start" data-goatcounter-click="cta-topbar-scan">Free scan</a>
+    </div>
   </div>
 </div>
 
@@ -98,10 +119,11 @@
   <h1>Your LLM didn't get worse.<br>It changed — and nobody told you.</h1>
   <p class="lead sub">Providers ship silent model changes with no version bump and no changelog. Same 200 OK, same latency — but JSON fidelity slips and outputs drift. Standard monitoring is blind to it. I build the early-warning layer that isn't.</p>
   <div class="btns">
-    <a class="btn btn-primary" href="#start">Request a free Drift Exposure Scan</a>
-    <a class="btn btn-ghost" href="https://seismograph-weather.onrender.com/dashboard" target="_blank" rel="noopener">See the live dashboard →</a>
+    <a class="btn btn-primary" href="#start" data-goatcounter-click="cta-hero-scan">Request a free Drift Exposure Scan</a>
+    <a class="btn btn-ghost" href="https://seismograph-weather.onrender.com/dashboard" target="_blank" rel="noopener" data-goatcounter-click="cta-hero-dashboard">See the live dashboard →</a>
   </div>
   <p class="note" style="margin-top:14px">Open-source engine · Apache-2.0 · privacy-preserving by design · you own every result.</p>
+  <p class="note" style="margin-top:6px">For teams shipping on OpenAI, Anthropic, Mistral or any third-party LLM API — where a silent model change means broken JSON, degraded answers, and support tickets before you know why.</p>
 </div>
 
 <!-- PROOF -->
@@ -123,6 +145,31 @@
       <a href="https://dev.to/taniacoder/your-llm-didnt-get-worse-it-changed-and-nobody-told-you-4ecl" target="_blank" rel="noopener">dev.to writeup</a> ·
       <span class="mono">pip install seismograph-probe</span>
     </p>
+  </div>
+</section>
+
+<!-- CLIENT PATH -->
+<section id="path">
+  <div class="wrap">
+    <div class="eyebrow">Your path, start to protected</div>
+    <h2>Three steps. First one costs nothing.</h2>
+    <div class="grid g3" style="margin-top:26px">
+      <div class="card">
+        <span class="tag">Step 1 · today</span>
+        <h3>Send your model stack</h3>
+        <p>One email listing the LLM APIs you depend on. No call, no system access, no NDA needed.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Step 2 · ~48 hours</span>
+        <h3>Get your exposure map</h3>
+        <p>Your top-3 silent-drift exposures, ranked, with the exact metrics that would move first. Yours to keep either way.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Step 3 · ~1 week</span>
+        <h3>Probes go live</h3>
+        <p>If the map warrants it: canary probes on your real model tuples, tuned thresholds, alerts wired into Slack or PagerDuty. Fixed price, reviewable deliverable.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -158,7 +205,7 @@
           <li>Written exposure report + a concrete alerting plan (Slack/PagerDuty/webhook)</li>
           <li>You own everything; nothing proprietary leaves your perimeter</li>
         </ul>
-        <a class="btn btn-primary" style="margin-top:16px" href="#start">Book a Baseline</a>
+        <a class="btn btn-primary" style="margin-top:16px" href="#start" data-goatcounter-click="cta-baseline">Book a Baseline</a>
       </div>
 
       <div class="card">
@@ -188,6 +235,17 @@
       <div class="card"><h3>Differential privacy on every metric.</h3><p>Numeric signals carry Laplace DP noise with a tracked epsilon budget. Aggregated, anonymised, defensible.</p></div>
       <div class="card"><h3>Runs in your VPC.</h3><p>Probes deploy inside your perimeter. Your data never depends on my infrastructure. Audit-grade evidence export for compliance.</p></div>
       <div class="card"><h3>Structurally neutral.</h3><p>I don't sell you a model, so I have no reason to tell you it's fine. The engine is Apache-2.0 and auditable line by line.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- MID CTA -->
+<section id="midcta" style="text-align:center">
+  <div class="wrap">
+    <h2 style="margin-bottom:.2em">Every week unmonitored is a week exposed.</h2>
+    <p class="lead" style="max-width:620px;margin:0 auto">The Anthropic routing bug degraded output for weeks at 0.8% of traffic while every dashboard stayed green — a seeded backtest flags it 38 days before the postmortem. Your free scan takes one email and ~48 hours.</p>
+    <div class="btns" style="justify-content:center">
+      <a class="btn btn-primary" href="#start" data-goatcounter-click="cta-mid-scan">Get your free exposure map</a>
     </div>
   </div>
 </section>
@@ -240,7 +298,7 @@
     <h2>One free scan tells you if it's worth your time.</h2>
     <p class="lead" style="max-width:600px;margin:0 auto 8px">Send me the model APIs you depend on. Within ~48 hours you get your top-3 silent-drift exposures and the metrics that move first — plus a fixed quote if you want the Baseline.</p>
     <div class="btns" style="justify-content:center">
-      <a class="btn btn-primary" href="mailto:tatyan.radchenko@gmail.com?subject=Drift%20Exposure%20Scan&body=Hi%20Tetiana%2C%20here%20is%20our%20model%20stack%3A%0A%0A-%20">Request your free Drift Exposure Scan</a>
+      <a class="btn btn-primary" href="mailto:tatyan.radchenko@gmail.com?subject=Drift%20Exposure%20Scan&body=Hi%20Tetiana%2C%20here%20is%20our%20model%20stack%3A%0A%0A-%20Provider%2Fmodel%3A%20%0A-%20What%20it%20powers%3A%20%0A-%20Roughly%20how%20many%20calls%2Fday%3A%20%0A" data-goatcounter-click="cta-final-scan">Request your free Drift Exposure Scan</a>
     </div>
     <p class="note" style="margin-top:16px">or email me directly: <a href="mailto:tatyan.radchenko@gmail.com" style="color:var(--accent)">tatyan.radchenko@gmail.com</a></p>
   </div>
@@ -257,6 +315,7 @@
   </footer>
 </div>
 
+<script data-goatcounter="https://driftdefense.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>
 (function(){
   var els = document.querySelectorAll('section, .hero, .footcta, .card');
