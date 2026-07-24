@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Did the model get worse, or is it just you? How to tell when an LLM API silently changes — Drift Defense</title>
+<meta name="description" content="A practical, vendor-neutral method to detect when a hosted LLM API silently changes underneath you — canary prompts, a baseline, a change-point test, and why one account can never answer &quot;is it just me?&quot;">
+<link rel="canonical" href="https://driftdefense.dev/guides/detect-silent-llm-change/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"TechArticle",
+ "headline":"Did the model get worse, or is it just you? How to tell when an LLM API silently changes",
+ "author":{"@type":"Person","name":"Tetiana Radchenko"},
+ "publisher":{"@type":"Organization","name":"Drift Defense","url":"https://driftdefense.dev"},
+ "datePublished":"2026-07-24",
+ "mainEntityOfPage":"https://driftdefense.dev/guides/detect-silent-llm-change/"},
+{"@type":"FAQPage","mainEntity":[
+ {"@type":"Question","name":"Did GPT / Claude / Gemini actually get worse recently?",
+  "acceptedAnswer":{"@type":"Answer","text":"Sometimes yes, sometimes it's your setup, and often it's a provider-side infra change that isn't a worse model at all. Don't answer from vibes — instrument it and get a dated signal."}},
+ {"@type":"Question","name":"How can I prove a hosted model changed?",
+  "acceptedAnswer":{"@type":"Answer","text":"You can't prove it from one account, but a frozen canary suite + a baseline + a change-point test gives you a dated shift. Provider-side vs local drift is only separable with agreement across multiple independent observers."}},
+ {"@type":"Question","name":"Isn't this just LLM observability or evals?",
+  "acceptedAnswer":{"@type":"Answer","text":"Related but different. Evals score quality at a point in time; observability watches your traffic. This detects change over time in a hosted dependency you don't control — and correlates it across organizations to rule out 'it's just me'."}},
+ {"@type":"Question","name":"What metrics should I track?",
+  "acceptedAnswer":{"@type":"Answer","text":"Start with the cheapest scalars that move when quality moves: schema/JSON validity, output length, and a single fixed pass/fail per canary. Add a rubric score later."}}
+]}]}
+</script>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--text:#e6edf3;--muted:#9aa7b3;--acc:#58a6ff;--good:#3fb950;--border:#30363d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:17px/1.65 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+main{max-width:760px;margin:0 auto;padding:48px 20px 80px}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+h1{font-size:1.9rem;line-height:1.25;margin:.4em 0}h2{font-size:1.35rem;margin-top:1.9em;border-bottom:1px solid var(--border);padding-bottom:.3em}
+.kicker{color:var(--muted);font-size:.95rem}.kicker a{color:var(--muted)}
+pre{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;font-size:.88em;line-height:1.5}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}p code,li code{background:var(--panel);border:1px solid var(--border);border-radius:4px;padding:.08em .35em;font-size:.9em}
+blockquote{margin:1.2em 0;padding:.1em 1em;border-left:3px solid var(--acc);background:var(--panel);border-radius:0 8px 8px 0}
+.cta{display:block;margin:2.2em 0;padding:18px 20px;background:var(--panel);border:1px solid var(--border);border-radius:10px}
+.cta strong{color:var(--good)}
+footer{color:var(--muted);font-size:.9rem;margin-top:3em;border-top:1px solid var(--border);padding-top:1.2em}
+ol li,ul li{margin:.45em 0}
+</style>
+</head>
+<body>
+<main>
+<p class="kicker"><a href="/">Drift Defense</a> · Guides · Also on <a href="https://dev.to/taniacoder/did-the-model-get-worse-or-is-it-just-you-how-to-tell-when-an-llm-api-silently-changes-1lia">dev.to</a></p>
+<h1>Did the model get worse, or is it just you?<br>How to actually tell when an LLM API silently changes</h1>
+
+<p>You ship a feature on top of <code>gpt-x</code> or <code>claude-y</code>. It works. Three weeks later your users say the outputs feel worse — vaguer, sloppier, failing on the same prompts that used to pass. You didn't change your code. Did the model change, or are you imagining it?</p>
+<p>This question eats an astonishing number of engineering hours, and it almost always dissolves into a vibes argument: half the thread says "it's clearly worse", the other half says "you have no evidence, it's confirmation bias." Both sides are right, because nobody has instrumented the one thing that would settle it. Here is how to settle it.</p>
+
+<h2>Why your gut is useless here (and so is a single comparison)</h2>
+<p>Two things move at once when a hosted model "feels worse":</p>
+<ol>
+<li><strong>The provider's side</strong> — a new checkpoint, a routing change, an inference optimization (batching, speculative decoding, quantization), or an infrastructure bug. You are not told when these happen. Often the provider doesn't announce it, and sometimes it isn't even a model change — it's an infra regression that only <em>looks</em> like the model got dumber.</li>
+<li><strong>Your side</strong> — a prompt tweak, a temperature change, a new library version, a different context length, or just which prompts you happened to hit today.</li>
+</ol>
+<p>From a single account, on a handful of anecdotal prompts, these two are <strong>indistinguishable</strong>. That's the trap. You need two things to escape it: an <em>objective, dated signal</em>, and a way to tell "it changed for me" from "it changed for everyone."</p>
+
+<h2>Step 1 — Fix a canary suite</h2>
+<p>Pick a small, frozen set of prompts — 20 to 100 — that exercise the capabilities you actually depend on. Keep it small and cheap; this is a smoke detector, not a benchmark. Freeze it: same prompts, same parameters (<code>temperature</code>, <code>top_p</code>, <code>max_tokens</code>), same model string, forever. The moment you change the suite you lose your baseline.</p>
+<p>For each canary, define a <strong>cheap scalar</strong> you can compute automatically:</p>
+<ul>
+<li>JSON/schema validity rate (did it return parseable, valid output?)</li>
+<li>Output length (a sudden shift often precedes a quality change)</li>
+<li>A pass/fail against a fixed assertion (does the function it wrote compile?)</li>
+<li>A rubric score from a cheap grader</li>
+</ul>
+<p>You are not trying to measure "quality" in the abstract. You are trying to detect <em>change</em>. A boring, stable scalar is exactly what you want.</p>
+
+<h2>Step 2 — Record a baseline while things are good</h2>
+<p>Run the suite on a schedule — hourly, daily, whatever your budget allows — and store <code>(timestamp, prompt_id, metric)</code>. Do this <strong>before</strong> you suspect anything. The baseline is the whole game: without "what normal looked like last month" you have nothing to compare today against. Estimate the mean <code>μ₀</code> and standard deviation <code>σ₀</code> of your metric per prompt from a stable window.</p>
+
+<h2>Step 3 — Run a change-point test, not a threshold</h2>
+<p>A fixed threshold ("alert if success rate &lt; 90%") is noisy and late. What you want is a <strong>sequential change-point detector</strong> that accumulates small, consistent shifts and fires with a timestamp. The classic is <strong>CUSUM</strong> (Page, 1954). It's a few lines:</p>
+<pre><code>def cusum_alarm(values, mu0, sigma0, k=0.5, h=5.0):
+    """Two-sided CUSUM on standardized observations.
+    k = slack (in std devs), h = alarm threshold.
+    Returns the index where a sustained shift is detected, or None."""
+    s_pos = s_neg = 0.0
+    for i, x in enumerate(values):
+        z = (x - mu0) / sigma0          # standardize against the baseline
+        s_pos = max(0.0, s_pos + z - k) # catches upward shifts
+        s_neg = max(0.0, s_neg - z - k) # catches downward shifts
+        if s_pos &gt; h or s_neg &gt; h:
+            return i                     # dated change-point
+    return None</code></pre>
+<p>Feed it your per-prompt metric over time. Instead of "feels worse", you now get <em>"json_success_rate on prompt #14 stepped down starting Tuesday"</em> — a claim with a date on it that you can put in a ticket. (<code>h=5.0</code>, <code>k=0.5</code> are reasonable starting points for standardized data; tune on your own history. Bayesian Online Change-Point Detection is a fancier alternative if you want posterior probabilities.)</p>
+<p>This alone puts you ahead of ~95% of "the model got worse" threads, which never get past anecdotes.</p>
+
+<h2>Step 4 — The part one account can never answer: "is it just me?"</h2>
+<p>Here's the ceiling you hit: even with a perfect change-point signal, <strong>you still can't tell a provider-side change from your own drift</strong>, because from one seat they look identical. Your CUSUM fired — but was it the model, or the LlamaIndex bump you did last week, or a flaky region?</p>
+<p>The only way to separate them is <strong>correlation across independent observers</strong>. If your canary fires on Tuesday, and several <em>other</em> organizations watching the <em>same</em> model on the <em>same</em> metric also fire around Tuesday, that agreement is the signal that it's provider-side — not your harness. One observer has N=1 forever; that's why these threads never converge. This is a genuinely different kind of detection: not "monitor my app" (every observability tool does that), but "did this change for <em>everyone</em>, privately confirmed across the fleet."</p>
+<p>That cross-observer angle is what <a href="https://github.com/Tania-coder/SEISMOGRAPH">SEISMOGRAPH</a> is built around: a lightweight probe runs your canary suite, a change-point detector flags shifts locally, and only privacy-preserving distributional features — never your prompts or outputs — are shared, so a public "model weather" alert only fires when <em>multiple independent observers agree</em>. A single org's signal stays private.</p>
+
+<h2>Does this actually work? A worked example</h2>
+<p>The method isn't hypothetical. Take the September 2025 Anthropic incident: for a stretch, <code>claude-sonnet-4</code> degraded because of infrastructure bugs — notably a context-window routing error — <strong>not</strong> a model update (Anthropic said so explicitly in <a href="https://www.anthropic.com/engineering/a-postmortem-of-three-recent-issues">their postmortem</a>). Exactly the "is it the model or the infra?" fog this whole article is about.</p>
+<p>Replaying a canary suite over that period with the CUSUM method above: <strong>a seeded backtest flags it 38 days before the postmortem.</strong> Not a live catch — a reproducible backtest, seeded and open — but it shows the signal was sitting in cheap distributional metrics well before the official acknowledgement.</p>
+
+<div class="cta">
+<strong>Do it yourself</strong><br>
+Probe (open source, Apache-2.0): <code>pip install seismograph-probe</code><br>
+Live "model weather" dashboard: <a href="/">driftdefense.dev</a><br>
+Code + method: <a href="https://github.com/Tania-coder/SEISMOGRAPH">github.com/Tania-coder/SEISMOGRAPH</a><br><br>
+You don't need any of that to start — the four steps above work with a cron job, a CSV, and the ten lines of CUSUM. But if you want the "is it just me?" half answered, that needs more than one observer, and that's the part worth federating.
+</div>
+
+<h2>FAQ</h2>
+<p><strong>Did GPT / Claude / Gemini actually get worse recently?</strong><br>
+Sometimes yes, sometimes it's your setup, and often it's a provider-side infra change that isn't a "worse model" at all. The point of this article is that you shouldn't answer from vibes — instrument it and get a dated signal.</p>
+<p><strong>How can I prove a hosted model changed?</strong><br>
+You can't <em>prove</em> it from one account, but you can get strong objective evidence: a frozen canary suite + a baseline + a change-point test gives you a dated shift. Provider-side vs. local drift is only separable with agreement across multiple independent observers.</p>
+<p><strong>Isn't this just LLM observability / evals?</strong><br>
+Related but different. Evals score quality at a point in time; observability watches <em>your</em> traffic. This is about detecting <em>change over time</em> in a hosted dependency you don't control — and, uniquely, correlating that change across organizations to rule out "it's just me."</p>
+<p><strong>What metrics should I track?</strong><br>
+Start with the cheapest ones that move when quality moves: schema/JSON validity, output length, and a single fixed pass/fail per canary. Add a rubric score later if you want resolution.</p>
+
+<footer>
+<em>Written for engineers who've lost an afternoon to "is it the model or is it me?" If you instrument even the four steps above, you'll never lose that afternoon again.</em><br><br>
+Tetiana Radchenko · <a href="/">Drift Defense</a> · SEISMOGRAPH is open source under Apache-2.0 · <a href="https://doi.org/10.5281/zenodo.21045517">DOI 10.5281/zenodo.21045517</a>
+</footer>
+</main>
+<script data-goatcounter="https://driftdefense.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
