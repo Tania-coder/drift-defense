@@ -128,7 +128,9 @@
   .btn-ghost:hover{border-color:var(--jade); color:var(--jade); text-decoration:none}
   .btns{display:flex; gap:14px; flex-wrap:wrap; margin-top:30px}
 
-  .hero{padding:56px 0 12px}
+  /* padding-block only: the shorthand would zero out .wrap's side
+     gutters and let the hero run to the viewport edge. */
+  .hero{padding-top:56px; padding-bottom:12px}
   .hero h1 .turn{color:var(--muted)}
 
   /* --- grids ------------------------------------------------------- */
@@ -181,6 +183,7 @@
   .s-no{color:var(--vermillion)}
   .s-unknown{color:var(--amber); opacity:.55}
   .s-unknown .bars i{background:repeating-linear-gradient(90deg,currentColor 0 3px,transparent 3px 6px)}
+  .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
   .hexlabel{font-size:.82rem; color:var(--soft); line-height:1.35}
   .hexlabel b{font-weight:500; color:var(--bone)}
   .hexlabel em{display:block; font-style:normal; font-family:var(--mono); font-size:.7rem; color:var(--muted); margin-top:2px}
@@ -730,15 +733,21 @@
     }
   }
 
+  /* The figure is read by eye as texture (one solid bar / two solid /
+     two dashed) and by colour. Neither reaches a screen reader, so the
+     verdict is also stated in words for assistive technology: colour,
+     texture and language each carry the state independently. */
   function hexagram(checks) {
-    return '<div class="hex">' + checks.map(function (c) {
+    return '<div class="hex" role="list">' + checks.map(function (c) {
       var cls = STATE_CLASS[c.state] || "s-unknown";
       var bars = c.state === "yes"
-        ? '<div class="bars yang"><i></i></div>'
-        : '<div class="bars yin"><i></i><i></i></div>';
-      return '<div class="hexline ' + cls + '">' + bars +
-        '<div class="hexlabel"><b>' + esc(c.label) + '</b><em>' + esc(c.detail) + '</em></div>' +
-        '</div>';
+        ? '<div class="bars yang" aria-hidden="true"><i></i></div>'
+        : '<div class="bars yin" aria-hidden="true"><i></i><i></i></div>';
+      return '<div class="hexline ' + cls + '" role="listitem">' + bars +
+        '<div class="hexlabel">' +
+          '<b>' + esc(c.label) + '<span class="sr">: ' + esc(c.state) + '</span></b>' +
+          '<em>' + esc(c.detail) + '</em>' +
+        '</div></div>';
     }).join("") + "</div>";
   }
 
@@ -801,11 +810,21 @@
 
     out.push("Board holds <b>" + models.length + " model leg" +
       (models.length === 1 ? "" : "s") + "</b>: " + reporting.length +
-      " reporting inside the " + (data.stale_after_hours || 30) +
-      "h freshness threshold, " + silent.length + " silent.");
+      " reporting, " + silent.length + " silent — by the gateway's own " +
+      "published verdict, which this board defers to rather than recomputing.");
 
     drifting.forEach(function (m) {
       out.push(["flag", "<b>" + esc(m.model_tuple) + "</b> is publishing DRIFTING — a quorum-verified alert landed within 24h. This is the condition the whole system exists to surface."]);
+    });
+
+    models.filter(function (m) { return m.threshold_divergence; }).forEach(function (m) {
+      var d = m.threshold_divergence;
+      out.push(["flag", "<b>" + esc(m.model_tuple) + "</b>: the gateway publishes <b>" +
+        esc(d.gateway_status) + "</b> at a window age of " + esc(fmtAge(d.window_age_hours)) +
+        ", which disagrees with this board's local " + esc(d.local_threshold_hours) +
+        "h freshness rule. The gateway is authoritative and this board defers to it — " +
+        "but the disagreement means upstream's rule has probably changed, so it is " +
+        "reported here rather than quietly absorbed."]);
     });
 
     silent.forEach(function (m) {
@@ -864,7 +883,9 @@
       (reach ? '<span style="color:var(--amber)">gateway unreachable at last check — showing last good snapshot</span>' : "");
   }
 
-  fetch("data/weather.json", { cache: "no-cache" })
+  // Absolute: the snapshot lives at the site root regardless of which
+  // path this markup is ever served from.
+  fetch("/data/weather.json", { cache: "no-cache" })
     .then(function (r) {
       if (!r.ok) throw new Error("HTTP " + r.status);
       return r.json();

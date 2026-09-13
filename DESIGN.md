@@ -40,6 +40,25 @@ the fact. **1** is what the page does; **0** is what it refuses.
 | T5 | Baseline | Accumulated from this site's own observations; states its own depth (`2/8 pts`) | A borrowed baseline from an unrelated model's backtest |
 | T6 | Reasoning panel | Deterministic narration of the snapshot, labelled as derived | A fake "AI is thinking…" token stream |
 | T7 | Claims | Only what the repository can back | Anything requiring trust without a receipt |
+| T8 | Sampling | One history point per genuine upstream window | Recording every poll, including unchanged ones |
+| T9 | Upstream constants | Read the gateway's own verdict; keep a local copy only to cross-check it | Mirror the threshold and silently diverge later |
+
+T8 was a defect found in review, not a decision made up front. The gateway
+publishes a rolling average and its probes emit ~2×/day, while this job polls
+4×/day — so half of all polls saw an unmoved window. Recording those repeats
+deflated σ₀ by ~11% and, far worse, accumulated the CUSUM statistic at twice
+the true rate: after ten real windows S⁻ read 14.0 where the truth was 7.0.
+The published "distance to alert" would have advanced twice as fast as
+reality. A detector that manufactures its own urgency is worse than no
+detector. Points are now keyed on `window_end`.
+
+T9 is the same failure wearing the product's uniform. `STALE_AFTER_HOURS`
+belongs to the gateway; copying it here means that the day upstream retunes
+it, this board silently disagrees with the system it reports on — a silent
+behavioural change in a dependency, which is the exact thing being sold
+against. The gateway's published `status` is now authoritative, the local
+threshold survives only as a cross-check, and a disagreement is published as
+a finding.
 
 T2 and T3 are the load-bearing ones. The engine already encodes this:
 status precedence is `DRIFTING > STALE > STABLE`, so a leg that has stopped
@@ -90,14 +109,29 @@ argument in its own `<head>`.
 
 | # | Decision | 1 — yes | 0 — no |
 | --- | --- | --- | --- |
-| A1 | Colour alone | Never the only carrier — every state has a shape and a word | Red/green dots as the sole signal |
+| A1 | Colour alone | Never the only carrier — colour, texture and words each carry the state | Red/green dots as the sole signal |
 | A2 | Motion | `prefers-reduced-motion` disables reveal and pulse | Animation that cannot be turned off |
 | A3 | Focus | Visible focus ring on every interactive element | `outline: none` |
 | A4 | Canvas | Carries an `aria-label` naming the series | An unlabelled decorative canvas |
 
-A1 is why the hexagram exists at all. Unbroken / broken / dotted is a *shape*
-distinction that survives colour-blindness and greyscale printing; the colour
-is a second, redundant channel rather than the only one.
+A1 is why the hexagram exists at all — but the first draft of this document
+overstated it, and the correction is worth keeping visible.
+
+*Yes* differs from *no* and *unknown* in **geometry**: one unbroken bar versus
+two. That distinction survives greyscale, colour-blindness and a bad monitor.
+*No* and *unknown*, however, share their geometry and differ only in
+**texture** (solid versus dashed) and lightness — measured against the page
+ground, 5.54:1 versus 3.49:1. That is a real and visible difference, but it is
+weaker than the yes/no one, and calling it a "shape" distinction was flattery.
+
+So the verdict is stated a third way, in words, in a screen-reader-only span
+on every line. Colour, texture and language now carry the state
+independently; no single channel is load-bearing.
+
+Measured contrast on the palette, page ground `#0B0C0F`: bone 15.68:1, soft
+10.99:1, muted 5.83:1, jade 10.49:1, amber 9.32:1, vermillion 5.54:1, button
+text on jade 9.02:1 — all above AA for normal text. The hairline rules are
+1.22:1 and deliberately below it: they separate, they never inform.
 
 ---
 

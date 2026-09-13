@@ -174,7 +174,37 @@ def analyse(model, history: list, current: dict) -> dict:
     # Each is strictly yes / no / unknown. "unknown" is never rounded up
     # into "yes": a monitoring product that guesses green is committing
     # the exact failure it exists to catch.
-    reporting = "yes" if (age is not None and age <= STALE_AFTER_HOURS) else "no"
+    # The gateway's own published status is authoritative here, not a
+    # threshold copied into this file. STALE_AFTER_HOURS is upstream's
+    # constant; hardcoding it would mean that the day upstream retunes
+    # it, this board silently disagrees with the system it reports on --
+    # a silent behavioural change in a dependency, which is precisely
+    # the failure this project exists to detect. Mirroring it here would
+    # be the bug wearing the product's own uniform.
+    #
+    # The local threshold is kept only to CHECK upstream, never to
+    # overrule it: if the two verdicts diverge, that divergence is
+    # itself a finding and gets published rather than smoothed over.
+    status = current.get("status")
+    if status == "STALE":
+        reporting = "no"
+    elif status in ("STABLE", "DRIFTING"):
+        reporting = "yes"
+    else:
+        reporting = "unknown"
+
+    if isinstance(age, (int, float)) and status in ("STABLE", "DRIFTING", "STALE"):
+        local = "no" if age > STALE_AFTER_HOURS else "yes"
+        if local != reporting:
+            out["threshold_divergence"] = {
+                "gateway_status": status,
+                "local_threshold_hours": STALE_AFTER_HOURS,
+                "window_age_hours": age,
+                "note": "gateway verdict and this board's local threshold "
+                        "disagree; the gateway is authoritative and its "
+                        "freshness rule has probably changed",
+            }
+
     depth_ok = "yes" if depth >= MIN_BASELINE else "no"
     alert_free = "no" if current.get("last_alert_timestamp") else "yes"
     length_ok = "yes" if length else "unknown"
@@ -254,16 +284,46 @@ def main() -> int:
         print("[pulse] " + stamp + " UNREACHABLE: " + str(error))
         return 0
 
+    # --- one history point per genuine gateway window ----------------
+    # The gateway publishes a rolling average over its last 10 signal
+    # batches, and its probes emit about twice a day. This job samples
+    # four times a day, so roughly half of all runs observe a window
+    # that has not moved.
+    #
+    # Recording those repeats would be actively harmful, not merely
+    # redundant. CUSUM is a cumulative statistic: feeding it the same
+    # observation twice accumulates S- at twice the true rate, so the
+    # published "distance to alert" would advance twice as fast as
+    # reality and the board would claim an alert was imminent when it
+    # was not. Duplicates also deflate sigma0 by ~11%, tightening the
+    # band against a baseline that only looks quiet because it is the
+    # same number repeated.
+    #
+    # So a leg is recorded only when its window_end has advanced.
+    prior = read_history()
+    last_window = {}
+    for row in prior:
+        if row.get("window_end"):
+            last_window[row.get("model_tuple")] = row["window_end"]
+
+    appended, repeats = 0, 0
     with HISTORY.open("a", encoding="utf-8") as fh:
         for leg in legs:
+            model = leg.get("model_tuple")
+            window_end = leg.get("window_end")
+            if window_end and last_window.get(model) == window_end:
+                repeats += 1
+                continue
             fh.write(json.dumps({
                 "t": stamp,
-                "model_tuple": leg.get("model_tuple"),
+                "model_tuple": model,
                 "status": leg.get("status"),
                 "json_success_rate": leg.get("recent_json_success_rate"),
                 "avg_output_length": leg.get("recent_avg_output_length"),
                 "window_age_hours": leg.get("window_age_hours"),
+                "window_end": window_end,
             }, separators=(",", ":")) + "\n")
+            appended += 1
 
     rows = read_history()
     if len(rows) > MAX_HISTORY:
@@ -300,6 +360,7 @@ def main() -> int:
         json.dumps(snapshot, indent=1) + "\n", encoding="utf-8"
     )
     print("[pulse] " + stamp + " legs=" + str(len(models))
+          + " recorded=" + str(appended) + " unchanged=" + str(repeats)
           + " observations=" + str(len(history)))
     return 0
 
