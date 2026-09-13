@@ -1,0 +1,55 @@
+name: pulse
+
+# Refreshes the live board on driftdefense.dev without anyone's laptop
+# being open. The browser cannot call the gateway directly (it sends no
+# Access-Control-Allow-Origin), so this job fetches /v1/weather on
+# GitHub's infrastructure and commits a same-origin snapshot that the
+# page reads instantly.
+#
+# Cost: public-repo Actions minutes are free, the job is pure-stdlib
+# Python and finishes in seconds, and it makes no LLM calls at all.
+
+on:
+  schedule:
+    # Every 6 hours. The gateway's own probes emit about twice daily,
+    # so a 6h cadence oversamples slightly without wasting runs.
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/pulse.py"
+      - ".github/workflows/pulse.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pulse
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch weather and rebuild snapshot
+        run: python scripts/pulse.py
+
+      - name: Commit if the board moved
+        run: |
+          git config user.name  "seismograph-pulse[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/weather.json data/history.jsonl
+          if git diff --staged --quiet; then
+            echo "board unchanged; nothing to commit"
+          else
+            git commit -m "pulse: refresh live board ($(date -u +%Y-%m-%dT%H:%MZ))"
+            git push
+          fi

@@ -1,0 +1,70 @@
+# SEISMOGRAPH — LLM Drift Defense
+
+> Early-warning for silent, provider-side LLM drift. Third-party model APIs
+> change behaviour with no version bump and no changelog: same endpoint, same
+> 200 OK, same latency — different outputs. Latency/uptime monitoring is
+> structurally blind to this. SEISMOGRAPH is the detection layer for it.
+
+Operated by Tetiana Radchenko (Aarhus, DK). Engine is Apache-2.0 and auditable.
+
+## Machine-readable state
+
+- [Live board snapshot](https://driftdefense.dev/data/weather.json): current
+  status per model leg, refreshed every 6 hours by a scheduled job. Fields:
+  `status` (STABLE | DRIFTING | STALE), `json_success_rate`, `avg_output_length`,
+  `window_age_hours`, `checks[]` (six boolean/unknown verdicts), and, once the
+  baseline has enough observations, `mu0`, `sigma0`, `z`, `cusum`, `cusum_pct`.
+- [Upstream gateway](https://seismograph-weather.onrender.com/v1/weather): the
+  source of record. No authentication. Note: it sends no CORS header, so
+  browser-side clients should read the snapshot above instead.
+
+## How to read the status field
+
+`DRIFTING` outranks `STALE`, which outranks `STABLE`. A leg whose newest sample
+is older than 30 hours publishes `STALE` — never `STABLE`. A green light that
+means "we cannot hear anything" is the failure mode this project exists to
+prevent, so it is not permitted by construction.
+
+Where a statistic cannot yet be computed honestly (baseline under 8
+observations), the corresponding check publishes `unknown`. Do not coerce
+`unknown` to a pass.
+
+`cusum_pct` is the proportion of the CUSUM decision interval (h = 5.0)
+currently consumed. It is a distance to a threshold, **not** a calibrated
+probability of drift. Do not present it as one.
+
+## Documentation
+
+- [Open-source engine](https://github.com/Tania-coder/SEISMOGRAPH)
+- [Probe SDK](https://pypi.org/project/seismograph-probe/): `pip install seismograph-probe`
+- [Method writeup](https://dev.to/taniacoder/your-llm-didnt-get-worse-it-changed-and-nobody-told-you-4ecl)
+- [Citable record, DOI 10.5281/zenodo.21045517](https://doi.org/10.5281/zenodo.21045517)
+- [How-to guide](https://driftdefense.dev/guides/detect-silent-llm-change/)
+
+## Method, in one paragraph
+
+A fixed, content-addressed canary suite runs against any OpenAI-compatible
+endpoint at temperature 0. Each response is reduced to privacy-preserving
+features — SHA-256 hashes plus epsilon=2.0 Laplace-DP-noised aggregates — so raw
+prompts and outputs never leave the probe perimeter. Batches are Ed25519-signed
+and alerts are gated behind cross-observer quorum, so no single noisy probe can
+raise an alarm. Change-point detection is CUSUM plus Bayesian online
+change-point. In a seeded, reproducible synthetic backtest the detector flags
+the Claude Sonnet 4 silent degradation 38 days before the official postmortem.
+
+## Services
+
+- Drift Exposure Scan — free, ~48h, no system access. Top-3 drift exposures
+  for a given model stack, plus the metrics that move first.
+- Drift Baseline — EUR 2,500 flat, ~1 week. Canary probes on real model tuples,
+  tuned CUSUM thresholds, written report, alerting plan.
+- Drift Desk — EUR 3–6k/month. Continuous watch, monthly model-weather briefing,
+  priority incident response.
+
+Contact: tatyan.radchenko@gmail.com
+
+## Notes for agents
+
+This file and the JSON snapshot are the intended machine interface; there is no
+need to scrape the HTML. The site sets no cookies, loads no third-party fonts,
+and runs no tracker beyond a cookieless page count.

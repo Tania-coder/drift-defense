@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SEISMOGRAPH — LLM Drift Defense for production AI teams</title>
 <meta name="description" content="An early-warning service for silent LLM provider drift. When a model API quietly changes underneath you, we catch it before your users do. Free Drift Exposure Scan; fixed-price Drift Baseline.">
+<meta name="theme-color" content="#0B0C0F">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://driftdefense.dev/">
 <meta property="og:title" content="SEISMOGRAPH — LLM Drift Defense">
@@ -35,110 +36,308 @@
 }
 </script>
 <style>
+  /* ------------------------------------------------------------------
+     SEISMOGRAPH — "Signal and Verdict"
+
+     The page has two registers, held in balance:
+       · the continuous  — a trace, a serif, an argument   (the art)
+       · the discrete    — a verdict, a mono digit, a line (the science)
+
+     Leibniz published binary arithmetic in 1703 and, in the same paper,
+     mapped it onto the I Ching hexagrams. That lineage is the design
+     spine here, and it is not ornament: this product's whole job is to
+     reduce a continuous signal to one honest binary verdict.
+
+     No webfonts, no CDN, no third-party JS beyond the cookieless
+     analytics already in use. A site that sells privacy-preservation
+     should not leak its readers to a font host.
+     ------------------------------------------------------------------ */
+
   :root{
-    --bg:#0a0b10; --panel:#12141c; --panel-2:#161925;
-    --line:#222637; --text:#e7e9f0; --muted:#9aa0b4; --soft:#c3c7d6;
-    --accent:#8a7bff; --accent-2:#5ad1c4; --good:#3ddc97;
-    --maxw:920px;
+    --ink:#0B0C0F;
+    --ink-2:#101218;
+    --ink-3:#151822;
+    --line:#1E212B;
+    --line-2:#2A2E3C;
+    --bone:#E8E6E1;
+    --soft:#BFC2CC;
+    --muted:#878C9B;
+
+    --jade:#4FD1C5;      /* yes  — reporting, in band          */
+    --amber:#E3A857;     /* unknown — not yet knowable          */
+    --vermillion:#E0604B;/* no   — silent, out of band          */
+    --gold:#C9A227;      /* the philosophical register          */
+
+    --measure:68ch;
+    --wide:1120px;
+    --prose:760px;
+
+    --serif:ui-serif,Georgia,"Iowan Old Style","Palatino Linotype",Palatino,serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
   }
+
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
   body{
-    margin:0; background:var(--bg); color:var(--text);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
-    line-height:1.6; -webkit-font-smoothing:antialiased;
+    margin:0; background:var(--ink); color:var(--bone);
+    font-family:var(--sans); line-height:1.65;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
   }
-  a{color:var(--accent); text-decoration:none}
+  ::selection{background:rgba(79,209,197,.22)}
+
+  a{color:var(--jade); text-decoration:none; text-underline-offset:3px}
   a:hover{text-decoration:underline}
-  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px}
-  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-  .eyebrow{font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent-2); font-weight:600}
-  h1{font-size:clamp(2rem,5vw,3.1rem); line-height:1.12; margin:.4em 0 .3em; letter-spacing:-.02em}
-  h2{font-size:clamp(1.5rem,3.5vw,2rem); margin:0 0 .2em; letter-spacing:-.01em}
-  h3{font-size:1.06rem; margin:0 0 .3em}
-  p{color:var(--soft)}
-  .lead{font-size:1.15rem; color:var(--soft)}
-  section{padding:62px 0; border-top:1px solid var(--line)}
-  .topbar{display:flex; justify-content:space-between; align-items:center; padding:18px 0; font-size:.92rem}
-  .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.02em}
-  .dot{width:11px;height:11px;border-radius:50%;background:var(--accent);box-shadow:0 0 14px var(--accent)}
-  .topbar .meta{color:var(--muted); font-size:.82rem}
-  .btn{display:inline-block; padding:13px 22px; border-radius:10px; font-weight:600; font-size:.97rem; border:1px solid transparent; cursor:pointer; transition:transform .15s ease, background .2s ease, border-color .2s ease}
-  .btn:hover{transform:translateY(-2px)}
-  .btn-primary{background:var(--accent); color:#0a0b10}
-  .btn-primary:hover{background:#a097ff; text-decoration:none}
-  .btn-ghost{border-color:var(--line); color:var(--text); background:var(--panel)}
-  .btn-ghost:hover{border-color:var(--accent); text-decoration:none}
-  .btns{display:flex; gap:12px; flex-wrap:wrap; margin-top:26px}
-  .hero{padding-top:34px}
-  .hero .sub{max-width:680px}
-  .grid{display:grid; gap:16px}
+  a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{
+    outline:2px solid var(--jade); outline-offset:3px; border-radius:3px;
+  }
+
+  .wrap{max-width:var(--wide); margin:0 auto; padding:0 26px}
+  .prose{max-width:var(--prose)}
+  .mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
+
+  /* --- type scale ------------------------------------------------- */
+  h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:-.015em; line-height:1.15}
+  h1{font-size:clamp(2.1rem,5.2vw,3.5rem); margin:.32em 0 .28em}
+  h2{font-size:clamp(1.55rem,3.4vw,2.15rem); margin:0 0 .3em}
+  h3{font-size:1.08rem; margin:0 0 .35em; letter-spacing:-.005em}
+  p{color:var(--soft); max-width:var(--measure)}
+  .lead{font-size:1.14rem; color:var(--soft)}
+  .eyebrow{
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--muted); font-weight:500;
+  }
+  .note{color:var(--muted); font-size:.86rem}
+
+  section{padding:84px 0; border-top:1px solid var(--line)}
+
+  /* --- chrome ------------------------------------------------------ */
+  .topbar{display:flex; justify-content:space-between; align-items:center; padding:20px 0; gap:16px; flex-wrap:wrap}
+  .brand{display:flex; align-items:center; gap:11px; font-weight:600; letter-spacing:.03em; font-size:.95rem}
+  .sigil{width:15px;height:15px;flex:0 0 auto}
+  .topbar .meta{color:var(--muted); font-size:.78rem}
+
+  .btn{
+    display:inline-block; padding:13px 24px; border-radius:2px;
+    font-weight:600; font-size:.95rem; border:1px solid transparent;
+    cursor:pointer; transition:background .18s ease, border-color .18s ease, color .18s ease;
+  }
+  .btn-primary{background:var(--jade); color:#08211F; border-color:var(--jade)}
+  .btn-primary:hover{background:#6FDCD2; text-decoration:none}
+  .btn-ghost{border-color:var(--line-2); color:var(--bone); background:transparent}
+  .btn-ghost:hover{border-color:var(--jade); color:var(--jade); text-decoration:none}
+  .btns{display:flex; gap:14px; flex-wrap:wrap; margin-top:30px}
+
+  .hero{padding:56px 0 12px}
+  .hero h1 .turn{color:var(--muted)}
+
+  /* --- grids ------------------------------------------------------- */
+  .grid{display:grid; gap:1px; background:var(--line)}
   .g3{grid-template-columns:repeat(3,1fr)}
   .g2{grid-template-columns:repeat(2,1fr)}
-  @media(max-width:760px){.g3,.g2{grid-template-columns:1fr}}
-  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:22px; transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease}
-  .card:hover{transform:translateY(-4px); border-color:var(--accent); box-shadow:0 12px 34px rgba(138,123,255,.14)}
-  .reveal{opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease}
+  .grid > *{background:var(--ink)}
+  .cell{padding:26px 24px}
+  @media(max-width:820px){.g3,.g2{grid-template-columns:1fr}}
+
+  .card{border:1px solid var(--line); background:var(--ink-2); padding:26px; border-radius:2px}
+
+  /* ================================================================
+     THE INSTRUMENT
+     ================================================================ */
+  .instrument{background:var(--ink-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line)}
+  .inst-head{display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap; margin-bottom:34px}
+
+  .legend{display:flex; gap:18px; flex-wrap:wrap; font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase}
+  .legend span{display:flex; align-items:center; gap:7px; color:var(--muted)}
+  .swatch{width:9px;height:9px;border-radius:50%}
+
+  .legs{display:grid; gap:1px; background:var(--line); border:1px solid var(--line)}
+  @media(min-width:900px){.legs{grid-template-columns:1fr 1fr}}
+
+  .leg{background:var(--ink); padding:28px 26px 24px; display:flex; flex-direction:column; gap:20px}
+  .leg-top{display:flex; justify-content:space-between; align-items:flex-start; gap:14px; flex-wrap:wrap}
+  .leg-name{font-family:var(--mono); font-size:.92rem; color:var(--bone); letter-spacing:-.01em; word-break:break-word}
+  .leg-sub{font-size:.76rem; color:var(--muted); margin-top:3px; font-family:var(--mono)}
+
+  .verdict{
+    font-family:var(--mono); font-size:.7rem; letter-spacing:.16em; text-transform:uppercase;
+    padding:5px 11px; border:1px solid currentColor; border-radius:2px; white-space:nowrap;
+  }
+  .v-stable{color:var(--jade)}
+  .v-stale{color:var(--amber)}
+  .v-drifting{color:var(--vermillion)}
+
+  canvas.trace{width:100%; height:112px; display:block}
+  .trace-cap{display:flex; justify-content:space-between; font-family:var(--mono); font-size:.68rem; color:var(--muted); margin-top:7px; gap:12px; flex-wrap:wrap}
+
+  /* --- the hexagram: six real checks, read bottom-up -------------- */
+  .hex{display:flex; flex-direction:column-reverse; gap:9px}
+  .hexline{display:grid; grid-template-columns:76px 1fr; gap:14px; align-items:center}
+  .bars{display:flex; gap:7px; height:7px}
+  .bars i{display:block; height:100%; border-radius:1px; background:currentColor}
+  .bars.yang i{flex:1 1 100%}
+  .bars.yin i{flex:1 1 calc(50% - 3.5px)}
+  .s-yes{color:var(--jade)}
+  .s-no{color:var(--vermillion)}
+  .s-unknown{color:var(--amber); opacity:.55}
+  .s-unknown .bars i{background:repeating-linear-gradient(90deg,currentColor 0 3px,transparent 3px 6px)}
+  .hexlabel{font-size:.82rem; color:var(--soft); line-height:1.35}
+  .hexlabel b{font-weight:500; color:var(--bone)}
+  .hexlabel em{display:block; font-style:normal; font-family:var(--mono); font-size:.7rem; color:var(--muted); margin-top:2px}
+
+  .readout{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; border-top:1px solid var(--line); padding-top:18px}
+  .readout div{min-width:0}
+  .readout .k{font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--muted)}
+  .readout .v{font-family:var(--mono); font-size:1.02rem; color:var(--bone); margin-top:3px; word-break:break-word}
+
+  /* --- reasoning --------------------------------------------------- */
+  .reason{margin-top:34px; border:1px solid var(--line); background:var(--ink-3); padding:26px}
+  .reason h3{font-family:var(--mono); font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); font-weight:500; margin-bottom:16px}
+  .reason ul{list-style:none; margin:0; padding:0}
+  .reason li{
+    position:relative; padding-left:22px; margin:0 0 12px;
+    color:var(--soft); font-size:.93rem; max-width:var(--measure);
+  }
+  .reason li::before{content:"—"; position:absolute; left:0; color:var(--line-2)}
+  .reason li b{color:var(--bone); font-weight:600}
+  .reason li.flag::before{content:"!"; color:var(--amber); font-family:var(--mono); font-weight:700}
+  .provenance{
+    margin-top:18px; padding-top:16px; border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:.7rem; color:var(--muted); line-height:1.9;
+    display:flex; gap:8px 22px; flex-wrap:wrap;
+  }
+
+  /* --- doctrine (the yes/no matrix) -------------------------------- */
+  .matrix{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); margin-top:30px}
+  @media(min-width:820px){.matrix{grid-template-columns:1fr 1fr}}
+  .mcol{background:var(--ink); padding:28px 26px}
+  .mcol h3{font-family:var(--mono); font-size:.74rem; letter-spacing:.18em; text-transform:uppercase; font-weight:500; margin-bottom:18px; display:flex; align-items:center; gap:10px}
+  .mcol.yes h3{color:var(--jade)}
+  .mcol.no h3{color:var(--vermillion)}
+  .mcol ul{list-style:none; margin:0; padding:0}
+  .mcol li{font-size:.92rem; color:var(--soft); padding:10px 0 10px 26px; position:relative; border-bottom:1px solid var(--line)}
+  .mcol li:last-child{border-bottom:0}
+  .mcol li::before{position:absolute; left:0; top:10px; font-family:var(--mono); font-size:.8rem}
+  .mcol.yes li::before{content:"1"; color:var(--jade)}
+  .mcol.no li::before{content:"0"; color:var(--vermillion)}
+
+  /* --- misc -------------------------------------------------------- */
+  .stat .n{font-family:var(--serif); font-size:2.3rem; font-weight:600; color:var(--bone); letter-spacing:-.02em; line-height:1}
+  .stat .l{color:var(--muted); font-size:.9rem; margin-top:10px}
+  .quote{
+    font-family:var(--serif); font-size:1.16rem; line-height:1.55; color:var(--soft);
+    border-left:2px solid var(--gold); padding:4px 0 4px 22px; max-width:var(--measure); margin:26px 0 0;
+  }
+  .tag{display:inline-block; font-family:var(--mono); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); border:1px solid var(--line-2); border-radius:2px; padding:4px 10px; margin-bottom:12px}
+  .price{font-family:var(--serif); font-size:2rem; font-weight:600; color:var(--bone); margin:.12em 0}
+  .price small{font-family:var(--sans); font-size:.9rem; color:var(--muted); font-weight:400}
+  ul.check{list-style:none; padding:0; margin:16px 0 0}
+  ul.check li{position:relative; padding-left:24px; margin:9px 0; color:var(--soft); font-size:.93rem}
+  ul.check li::before{content:""; position:absolute; left:0; top:.62em; width:9px; height:2px; background:var(--jade)}
+  .step{border-left:1px solid var(--line); padding-left:22px}
+  .step .num{font-family:var(--mono); font-size:.68rem; letter-spacing:.16em; color:var(--gold); text-transform:uppercase}
+
+  .faq details{border-bottom:1px solid var(--line); padding:6px 0}
+  .faq summary{
+    font-family:var(--serif); font-size:1.06rem; color:var(--bone); cursor:pointer;
+    padding:16px 0; list-style:none; display:flex; justify-content:space-between; gap:16px; align-items:baseline;
+  }
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+"; font-family:var(--mono); color:var(--muted); flex:0 0 auto}
+  .faq details[open] summary::after{content:"\2212"}
+  .faq details p{margin:0 0 18px}
+
+  .founder{display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; margin-top:22px}
+  .avatar{
+    width:66px;height:66px;border-radius:50%;flex:0 0 auto;
+    border:1px solid var(--line-2); display:flex; align-items:center; justify-content:center;
+    font-family:var(--serif); font-weight:600; font-size:1.3rem; color:var(--gold);
+  }
+  .footcta{text-align:center; padding:96px 0; border-top:1px solid var(--line)}
+  .footcta p{margin-left:auto; margin-right:auto}
+  footer{border-top:1px solid var(--line); padding:28px 0 40px; color:var(--muted); font-size:.82rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px}
+  .links a{color:var(--muted); margin-left:18px}
+  .links a:first-child{margin-left:0}
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .7s cubic-bezier(.2,.6,.2,1), transform .7s cubic-bezier(.2,.6,.2,1)}
   .reveal.in{opacity:1; transform:none}
-  @media (prefers-reduced-motion: reduce){ .reveal{opacity:1!important; transform:none!important; transition:none} }
-  .stat .n{font-size:2.2rem; font-weight:700; letter-spacing:-.02em; color:#fff}
-  .stat .l{color:var(--muted); font-size:.92rem; margin-top:4px}
-  .quote{border-left:3px solid var(--accent); padding:6px 0 6px 18px; color:var(--soft); font-size:1.04rem}
-  .price{font-size:1.9rem; font-weight:700; color:#fff; margin:.1em 0}
-  .price small{font-size:.95rem; color:var(--muted); font-weight:500}
-  .tag{display:inline-block; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--accent-2); border:1px solid var(--line); border-radius:999px; padding:3px 10px; margin-bottom:8px}
-  ul.check{list-style:none; padding:0; margin:14px 0 0}
-  ul.check li{position:relative; padding-left:24px; margin:8px 0; color:var(--soft); font-size:.96rem}
-  ul.check li::before{content:"✓"; position:absolute; left:0; color:var(--good); font-weight:700}
-  .faq h3{margin-top:22px}
-  .faq p{margin:.2em 0 0}
-  .founder{display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap}
-  .avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.5rem;color:#0a0b10;flex:0 0 auto}
-  .footcta{text-align:center; padding:72px 0}
-  .footcta h2{margin-bottom:.3em}
-  footer{border-top:1px solid var(--line); padding:26px 0; color:var(--muted); font-size:.85rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px}
-  .links a{color:var(--muted); margin-left:16px}
-  .note{color:var(--muted); font-size:.86rem}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1!important; transform:none!important; transition:none}
+  }
 </style>
 </head>
 <body>
 
 <div class="wrap">
   <div class="topbar">
-    <div class="brand"><span class="dot"></span> SEISMOGRAPH</div>
-    <div style="display:flex;align-items:center;gap:16px">
-      <div class="meta mono">Aarhus, DK · LLM Drift Defense</div>
-      <a class="btn btn-primary" style="padding:8px 14px;font-size:.85rem" href="#start" data-goatcounter-click="cta-topbar-scan">Free scan</a>
+    <div class="brand">
+      <svg class="sigil" viewBox="0 0 20 20" aria-hidden="true">
+        <circle cx="10" cy="10" r="9" fill="none" stroke="#4FD1C5" stroke-width="1.2"/>
+        <path d="M10 1a4.5 4.5 0 0 0 0 9 4.5 4.5 0 0 1 0 9 9 9 0 0 0 0-18z" fill="#4FD1C5"/>
+      </svg>
+      SEISMOGRAPH
+    </div>
+    <div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+      <span class="meta mono">Aarhus, DK · LLM Drift Defense</span>
+      <a class="btn btn-primary" style="padding:9px 16px;font-size:.84rem" href="#start" data-goatcounter-click="cta-topbar-scan">Free scan</a>
     </div>
   </div>
 </div>
 
 <!-- HERO -->
 <div class="wrap hero">
-  <div class="eyebrow">Early-warning for silent LLM provider drift</div>
-  <h1>Your LLM didn't get worse.<br>It changed — and nobody told you.</h1>
-  <p class="lead sub">Providers ship silent model changes with no version bump and no changelog. Same 200 OK, same latency — but JSON fidelity slips and outputs drift. Standard monitoring is blind to it. I build the early-warning layer that isn't.</p>
+  <div class="eyebrow">Early warning for silent LLM provider drift</div>
+  <h1>Your LLM didn't get worse.<br><span class="turn">It changed — and nobody told you.</span></h1>
+  <p class="lead">Providers ship silent model changes with no version bump and no changelog. Same 200 OK, same latency — but JSON fidelity slips and outputs drift. Standard monitoring is blind to it. I build the early-warning layer that isn't.</p>
   <div class="btns">
     <a class="btn btn-primary" href="#start" data-goatcounter-click="cta-hero-scan">Request a free Drift Exposure Scan</a>
-    <a class="btn btn-ghost" href="https://seismograph-weather.onrender.com/dashboard" target="_blank" rel="noopener" data-goatcounter-click="cta-hero-dashboard">See the live dashboard →</a>
+    <a class="btn btn-ghost" href="#board" data-goatcounter-click="cta-hero-board">Watch it working below ↓</a>
   </div>
-  <p class="note" style="margin-top:14px">Open-source engine · Apache-2.0 · privacy-preserving by design · you own every result.</p>
-  <p class="note" style="margin-top:6px">For teams shipping on OpenAI, Anthropic, Mistral or any third-party LLM API — where a silent model change means broken JSON, degraded answers, and support tickets before you know why.</p>
+  <p class="note" style="margin-top:20px">Open-source engine · Apache-2.0 · privacy-preserving by design · you own every result.</p>
 </div>
+
+<!-- ================= THE INSTRUMENT ================= -->
+<section class="instrument" id="board">
+  <div class="wrap">
+    <div class="inst-head">
+      <div>
+        <div class="eyebrow">Live board</div>
+        <h2 style="margin-top:.25em">The instrument, running.</h2>
+        <p style="margin-top:.5em">Not a screenshot and not a mock-up. Every figure below is fetched from the public gateway on a schedule and recomputed here. Where the data isn't yet deep enough to answer a question honestly, the answer reads <em style="color:var(--amber);font-style:normal">unknown</em> — never a comfortable green.</p>
+      </div>
+      <div class="legend" aria-hidden="true">
+        <span><i class="swatch" style="background:var(--jade)"></i>yes</span>
+        <span><i class="swatch" style="background:var(--vermillion)"></i>no</span>
+        <span><i class="swatch" style="background:var(--amber)"></i>unknown</span>
+      </div>
+    </div>
+
+    <div class="legs" id="legs">
+      <div class="leg"><div class="leg-name mono" id="boot">Loading the board…</div></div>
+    </div>
+
+    <div class="reason">
+      <h3>Reasoning — derived from the snapshot above</h3>
+      <ul id="reasoning"><li>Reading the current snapshot…</li></ul>
+      <div class="provenance" id="provenance"></div>
+    </div>
+  </div>
+</section>
 
 <!-- PROOF -->
 <section id="proof">
   <div class="wrap">
     <div class="eyebrow">Proof of process</div>
     <h2>Not a claim. A receipt.</h2>
-    <p class="lead" style="max-width:680px">Two-person teams pitch with a deck. I pitch with a reproducible, seeded backtest you can re-run yourself.</p>
-    <div class="grid g3" style="margin:26px 0">
-      <div class="card stat"><div class="n">38 days</div><div class="l">A seeded, reproducible backtest flags the Claude Sonnet 4 silent degradation 38 days before the provider's official postmortem — during the 0.8% misrouting window, before user-visible symptoms.</div></div>
-      <div class="card stat"><div class="n">Live</div><div class="l">Public &ldquo;model weather&rdquo; dashboard fed by real canary emissions, refreshed twice daily. No login — open it right now.</div></div>
-      <div class="card stat"><div class="n">325 tests</div><div class="l">Green test suite, change-point (CUSUM) detection, tool-calling drift canaries, audit-grade evidence export. Engine is open-source and auditable.</div></div>
+    <p class="lead">Two-person teams pitch with a deck. I pitch with a reproducible, seeded backtest you can re-run yourself.</p>
+    <div class="grid g3" style="margin:34px 0">
+      <div class="cell stat"><div class="n">38 days</div><div class="l">A seeded, reproducible backtest flags the Claude Sonnet 4 silent degradation 38 days before the provider's official postmortem — during the 0.8% misrouting window, before user-visible symptoms.</div></div>
+      <div class="cell stat"><div class="n">Live</div><div class="l">Public “model weather” fed by real canary emissions. The board above reads the same endpoint, on a schedule, with no login and no laptop involved.</div></div>
+      <div class="cell stat"><div class="n">325 tests</div><div class="l">Green test suite, change-point (CUSUM) detection, tool-calling drift canaries, audit-grade evidence export. Engine is open-source and auditable.</div></div>
     </div>
     <p class="quote">In the backtest, detection occurred during the 0.8% misrouting window — 38 days before the official postmortem and 19 days before the escalation became visible to users. The methodology is hash-committed, so the next call is a prediction, not a postmortem.</p>
-    <p style="margin-top:18px">
+    <p style="margin-top:26px">
       Evidence:
       <a href="https://seismograph-weather.onrender.com/dashboard" target="_blank" rel="noopener">live dashboard</a> ·
       <a href="https://github.com/Tania-coder/SEISMOGRAPH" target="_blank" rel="noopener">open-source engine</a> ·
@@ -146,7 +345,7 @@
       <span class="mono">pip install seismograph-probe</span> ·
       <a href="/guides/detect-silent-llm-change/">how-to guide</a>
     </p>
-    <p class="note" style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px 18px">
+    <p class="note" style="margin-top:18px;display:flex;flex-wrap:wrap;gap:8px 20px">
       <span>Apache-2.0, open source</span>
       <span>325 automated tests, CI-gated</span>
       <span>CodeQL: 0 open alerts</span>
@@ -156,25 +355,66 @@
   </div>
 </section>
 
+<!-- DOCTRINE — the yes/no matrix -->
+<section id="doctrine">
+  <div class="wrap">
+    <div class="eyebrow">Design doctrine</div>
+    <h2>A binary, held honestly.</h2>
+    <p class="lead">Leibniz published binary arithmetic in 1703 and, in the same paper, mapped it onto the I&nbsp;Ching's broken and unbroken lines. That is the whole job here: take a continuous signal and reduce it to one honest verdict. The six-line figure on each leg above is not decoration — each line is a real check, drawn unbroken for <em style="font-style:normal;color:var(--jade)">yes</em>, broken for <em style="font-style:normal;color:var(--vermillion)">no</em>, dotted where the honest answer is <em style="font-style:normal;color:var(--amber)">not yet knowable</em>.</p>
+
+    <div class="matrix">
+      <div class="mcol yes">
+        <h3>This page says yes to</h3>
+        <ul>
+          <li>Real numbers, or an explicit <span class="mono">unknown</span>. Silence renders as silence.</li>
+          <li>Ornament that is also instrument — the hexagram is the readout.</li>
+          <li>One accent colour, spent only on meaning: state, never mood.</li>
+          <li>Serif for the argument, monospace for the measurement. The two registers stay visibly distinct.</li>
+          <li>Negative space as structure, so the eye is led rather than crowded.</li>
+          <li>Motion only where it carries information.</li>
+          <li>Zero third-party fonts, CDNs or trackers beyond cookieless counts.</li>
+          <li>Readable by machines: <a href="/data/weather.json">weather.json</a>, <a href="/llms.txt">llms.txt</a>, JSON-LD.</li>
+          <li>Keyboard focus, reduced-motion and contrast honoured by default.</li>
+        </ul>
+      </div>
+      <div class="mcol no">
+        <h3>And no to</h3>
+        <ul>
+          <li>A fake “AI is thinking…” stream. Nothing here pretends to be a live mind.</li>
+          <li>An invented probability. A number with no calibration behind it is a lie in a lab coat.</li>
+          <li>Green by default. An unmonitored leg is amber, because that is the truth.</li>
+          <li>Stock gradient blobs, glassmorphism, and the same hero every other tool ships.</li>
+          <li>Carousels, modals, cookie walls, chat bubbles, countdown timers.</li>
+          <li>Webfonts that leak the reader to a third party on a privacy product.</li>
+          <li>Frameworks and build steps for a page that is one document.</li>
+          <li>Autoplaying video, parallax, and scroll-jacking.</li>
+          <li>Claims the repository cannot back.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note" style="margin-top:22px">The same doctrine governs the engine: status precedence is <span class="mono">DRIFTING &gt; STALE &gt; STABLE</span>, so a leg that has stopped reporting can never publish as healthy. A monitor that shows green because it cannot hear anything is the exact failure this project exists to prevent.</p>
+  </div>
+</section>
+
 <!-- CLIENT PATH -->
 <section id="path">
   <div class="wrap">
     <div class="eyebrow">Your path, start to protected</div>
-    <h2>Three steps. First one costs nothing.</h2>
-    <div class="grid g3" style="margin-top:26px">
-      <div class="card">
-        <span class="tag">Step 1 · today</span>
-        <h3>Send your model stack</h3>
+    <h2>Three steps. The first one costs nothing.</h2>
+    <div class="grid g3" style="margin-top:34px;background:transparent;gap:26px">
+      <div class="step">
+        <div class="num">Step 1 · today</div>
+        <h3 style="margin-top:.5em">Send your model stack</h3>
         <p>One email listing the LLM APIs you depend on. No call, no system access, no NDA needed.</p>
       </div>
-      <div class="card">
-        <span class="tag">Step 2 · ~48 hours</span>
-        <h3>Get your exposure map</h3>
+      <div class="step">
+        <div class="num">Step 2 · ~48 hours</div>
+        <h3 style="margin-top:.5em">Get your exposure map</h3>
         <p>Your top-3 silent-drift exposures, ranked, with the exact metrics that would move first. Yours to keep either way.</p>
       </div>
-      <div class="card">
-        <span class="tag">Step 3 · ~1 week</span>
-        <h3>Probes go live</h3>
+      <div class="step">
+        <div class="num">Step 3 · ~1 week</div>
+        <h3 style="margin-top:.5em">Probes go live</h3>
         <p>If the map warrants it: canary probes on your real model tuples, tuned thresholds, alerts wired into Slack or PagerDuty. Fixed price, reviewable deliverable.</p>
       </div>
     </div>
@@ -186,10 +426,10 @@
   <div class="wrap">
     <div class="eyebrow">How we work</div>
     <h2>Start free. Scale only if it's worth it.</h2>
-    <p class="lead" style="max-width:680px">Flat pricing, concrete deliverables, fixed timelines. No open-ended &ldquo;let's chat&rdquo; retainers to start.</p>
+    <p class="lead">Flat pricing, concrete deliverables, fixed timelines. No open-ended “let's chat” retainers to start.</p>
 
-    <div class="grid g3" style="margin:26px 0">
-      <div class="card">
+    <div class="grid g3" style="margin:34px 0">
+      <div class="cell">
         <span class="tag">Start here</span>
         <h3>Drift Exposure Scan</h3>
         <div class="price">Free</div>
@@ -199,11 +439,11 @@
           <li>I map where a silent change would hit you first</li>
           <li>You get your top-3 drift exposures + the metrics to watch</li>
         </ul>
-        <p class="note" style="margin-top:14px">Zero risk. You leave with a watchlist worth more than the time it took.</p>
+        <p class="note" style="margin-top:16px">Zero risk. You leave with a watchlist worth more than the time it took.</p>
       </div>
 
-      <div class="card" style="border-color:var(--accent)">
-        <span class="tag" style="color:var(--accent)">Most popular</span>
+      <div class="cell" style="background:var(--ink-2)">
+        <span class="tag" style="color:var(--jade);border-color:var(--jade)">Most popular</span>
         <h3>Drift Baseline</h3>
         <div class="price">€2,500 <small>flat</small></div>
         <p class="note">~1 week · reviewable deliverable</p>
@@ -213,23 +453,23 @@
           <li>Written exposure report + a concrete alerting plan (Slack/PagerDuty/webhook)</li>
           <li>You own everything; nothing proprietary leaves your perimeter</li>
         </ul>
-        <a class="btn btn-primary" style="margin-top:16px" href="#start" data-goatcounter-click="cta-baseline">Book a Baseline</a>
+        <a class="btn btn-primary" style="margin-top:20px" href="#start" data-goatcounter-click="cta-baseline">Book a Baseline</a>
       </div>
 
-      <div class="card">
+      <div class="cell">
         <span class="tag">Ongoing</span>
         <h3>Drift Desk</h3>
         <div class="price">€3–6k <small>/ month</small></div>
         <p class="note">standing early-warning line</p>
         <ul class="check">
           <li>Continuous watch across your model dependencies</li>
-          <li>A heads-up the moment a provider shifts — plus a monthly &ldquo;model weather&rdquo; briefing</li>
+          <li>A heads-up the moment a provider shifts — plus a monthly “model weather” briefing</li>
           <li>Priority response when a provider incident hits</li>
         </ul>
-        <p class="note" style="margin-top:14px">Cheaper than one bad week in production.</p>
+        <p class="note" style="margin-top:16px">Cheaper than one bad week in production.</p>
       </div>
     </div>
-    <p class="note">Need it built into your stack and handed over working? A full <strong>Proof-of-Process Build</strong> (in-VPC probe fleet wired to your alerting, runbook, handover) is scoped per engagement — ask in your scan.</p>
+    <p class="note">Need it built into your stack and handed over working? A full <strong style="color:var(--soft)">Proof-of-Process Build</strong> (in-VPC probe fleet wired to your alerting, runbook, handover) is scoped per engagement — ask in your scan.</p>
   </div>
 </section>
 
@@ -238,21 +478,21 @@
   <div class="wrap">
     <div class="eyebrow">Built for teams that can't afford a silent break</div>
     <h2>Privacy-preserving by design.</h2>
-    <div class="grid g2" style="margin-top:24px">
-      <div class="card"><h3>No raw prompts or outputs. Ever.</h3><p>Only derived, non-reversible features cross the boundary — token counts, a JSON-valid flag, SHA-256 hashes. Raw text is never stored or transmitted.</p></div>
-      <div class="card"><h3>Differential privacy on every metric.</h3><p>Numeric signals carry Laplace DP noise with a tracked epsilon budget. Aggregated, anonymised, defensible.</p></div>
-      <div class="card"><h3>Runs in your VPC.</h3><p>Probes deploy inside your perimeter. Your data never depends on my infrastructure. Audit-grade evidence export for compliance.</p></div>
-      <div class="card"><h3>Structurally neutral.</h3><p>I don't sell you a model, so I have no reason to tell you it's fine. The engine is Apache-2.0 and auditable line by line.</p></div>
+    <div class="grid g2" style="margin-top:32px">
+      <div class="cell"><h3>No raw prompts or outputs. Ever.</h3><p>Only derived, non-reversible features cross the boundary — token counts, a JSON-valid flag, SHA-256 hashes. Raw text is never stored or transmitted.</p></div>
+      <div class="cell"><h3>Differential privacy on every metric.</h3><p>Numeric signals carry Laplace DP noise with a tracked epsilon budget. Aggregated, anonymised, defensible.</p></div>
+      <div class="cell"><h3>Runs in your VPC.</h3><p>Probes deploy inside your perimeter. Your data never depends on my infrastructure. Audit-grade evidence export for compliance.</p></div>
+      <div class="cell"><h3>Structurally neutral.</h3><p>I don't sell you a model, so I have no reason to tell you it's fine. The engine is Apache-2.0 and auditable line by line.</p></div>
     </div>
-    <p class="note" style="margin-top:18px;max-width:760px"><strong>Security posture.</strong> Signals are signed with per-org Ed25519 keys. The codebase ships with CodeQL static analysis (0 open alerts), a 325-test CI gate, 2FA-protected accounts, and tokenless PyPI releases via OIDC Trusted Publishing. Reproduce every claim yourself — the backtest is seeded and open.</p>
+    <p class="note" style="margin-top:22px;max-width:var(--measure)"><strong style="color:var(--soft)">Security posture.</strong> Signals are signed with per-org Ed25519 keys. The codebase ships with CodeQL static analysis (0 open alerts), a 325-test CI gate, 2FA-protected accounts, and tokenless PyPI releases via OIDC Trusted Publishing. Reproduce every claim yourself — the backtest is seeded and open.</p>
   </div>
 </section>
 
 <!-- MID CTA -->
 <section id="midcta" style="text-align:center">
   <div class="wrap">
-    <h2 style="margin-bottom:.2em">Every week unmonitored is a week exposed.</h2>
-    <p class="lead" style="max-width:620px;margin:0 auto">The Anthropic routing bug degraded output for weeks at 0.8% of traffic while every dashboard stayed green — a seeded backtest flags it 38 days before the postmortem. Your free scan takes one email and ~48 hours.</p>
+    <h2 style="margin-bottom:.25em">Every week unmonitored is a week exposed.</h2>
+    <p class="lead" style="max-width:640px;margin:0 auto">The Anthropic routing bug degraded output for weeks at 0.8% of traffic while every dashboard stayed green — a seeded backtest flags it 38 days before the postmortem. Your free scan takes one email and ~48 hours.</p>
     <div class="btns" style="justify-content:center">
       <a class="btn btn-primary" href="#start" data-goatcounter-click="cta-mid-scan">Get your free exposure map</a>
     </div>
@@ -260,56 +500,57 @@
 </section>
 
 <!-- DRIFT ALERTS SIGNUP -->
-<section class="sg-alert-wrap" id="drift-alerts">
+<section id="drift-alerts">
   <div class="wrap">
-    <div class="card" style="max-width:560px;margin:0 auto;padding:28px">
+    <div class="card" style="max-width:600px;margin:0 auto;padding:32px">
       <span class="tag">Early warning</span>
-      <h3 style="font-size:1.25rem">Get an alert when your model drifts</h3>
-      <p class="note" style="margin:6px 0 18px">Silent changes happen behind stable model names &mdash; in the Anthropic Aug&ndash;Sep&nbsp;2025 case, a seeded backtest flags it 38&nbsp;days before the postmortem. Leave your email and you&rsquo;ll be notified when drift alerts open up for the models on the public board.</p>
+      <h3 style="font-size:1.3rem">Get an alert when your model drifts</h3>
+      <p class="note" style="margin:8px 0 22px">Silent changes happen behind stable model names — in the Anthropic Aug–Sep&nbsp;2025 case, a seeded backtest flags it 38&nbsp;days before the postmortem. Leave your email and you'll be notified when drift alerts open up for the models on the public board.</p>
       <form action="https://formsubmit.co/tatyan.radchenko@gmail.com" method="POST" id="sg-alert-form" style="display:flex;gap:10px;flex-wrap:wrap">
         <input type="hidden" name="_subject" value="SEISMOGRAPH drift-alert signup">
         <input type="hidden" name="_next" value="https://driftdefense.dev/?signup=ok#drift-alerts">
         <input type="hidden" name="_captcha" value="false">
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-        <input type="email" name="email" required placeholder="you@company.com" aria-label="Email address" style="flex:1 1 220px;padding:10px 14px;border-radius:8px;background:var(--bg);border:1px solid var(--line);color:var(--text);font-size:.95rem;outline:none">
-        <button type="submit" class="btn btn-primary" style="padding:10px 22px">Notify me</button>
+        <label for="sg-email" style="position:absolute;left:-9999px">Email address</label>
+        <input id="sg-email" type="email" name="email" required placeholder="you@company.com" style="flex:1 1 220px;padding:12px 14px;border-radius:2px;background:var(--ink);border:1px solid var(--line-2);color:var(--bone);font-size:.95rem;font-family:var(--mono);outline:none">
+        <button type="submit" class="btn btn-primary" style="padding:12px 24px">Notify me</button>
       </form>
-      <p class="note" style="margin:14px 0 0;font-size:.8rem">No form? <a href="mailto:tatyan.radchenko@gmail.com?subject=SEISMOGRAPH%20drift-alert%20signup">Request an alert by mail</a>. One email per confirmed drift event &mdash; no newsletter, no sharing.</p>
+      <p class="note" style="margin:16px 0 0;font-size:.8rem">No form? <a href="mailto:tatyan.radchenko@gmail.com?subject=SEISMOGRAPH%20drift-alert%20signup">Request an alert by mail</a>. One email per confirmed drift event — no newsletter, no sharing.</p>
     </div>
   </div>
-  <script>
-  (function(){
-    var f=document.getElementById("sg-alert-form");
-    if(!f)return;
-    f.addEventListener("submit",function(){
-      if(window.goatcounter&&window.goatcounter.count){
-        window.goatcounter.count({path:"cta-alert-signup",title:"Drift alert signup",event:true});
-      }
-    });
-  })();
-  </script>
 </section>
 
 <!-- FAQ -->
 <section id="faq" class="faq">
-  <div class="wrap">
+  <div class="wrap prose">
     <div class="eyebrow">FAQ</div>
     <h2>Straight answers.</h2>
-
-    <h3>How is this different from Datadog / LangSmith / eval tools?</h3>
-    <p>App-level observability tells you <em>your</em> outputs got worse. It can't tell you <em>whether the model itself changed</em> — and it's often channel-conflicted (it sells to the providers it would have to indict). SEISMOGRAPH watches the provider side, neutrally, across time.</p>
-
-    <h3>What do I actually get?</h3>
-    <p>The free scan: your top-3 drift exposures within ~48h. The Baseline: live canary probes, tuned thresholds, a written report, and an alerting plan — a reviewable deliverable in about a week, not an open-ended retainer.</p>
-
-    <h3>Is my data safe?</h3>
-    <p>Raw prompts and outputs never leave your perimeter — only DP-noised aggregate features. Probes run in your VPC. You own every artifact. Full technical detail is in the open-source repo.</p>
-
-    <h3>Why should I trust the detection?</h3>
-    <p>Because it's falsifiable. The 38-day Claude Sonnet 4 call was made on a seeded, reproducible backtest you can re-run. The methodology is hash-committed up front.</p>
-
-    <h3>What isn't ready yet?</h3>
-    <p>Honest answer: the public network effect (cross-org quorum) compounds with adoption and is early. Today the value is the in-VPC early-warning layer and the neutral monitoring — which stand on their own. I'd rather tell you that than oversell it.</p>
+    <div style="margin-top:26px">
+      <details>
+        <summary>How is this different from Datadog / LangSmith / eval tools?</summary>
+        <p>App-level observability tells you <em>your</em> outputs got worse. It can't tell you <em>whether the model itself changed</em> — and it's often channel-conflicted (it sells to the providers it would have to indict). SEISMOGRAPH watches the provider side, neutrally, across time.</p>
+      </details>
+      <details>
+        <summary>What do I actually get?</summary>
+        <p>The free scan: your top-3 drift exposures within ~48h. The Baseline: live canary probes, tuned thresholds, a written report, and an alerting plan — a reviewable deliverable in about a week, not an open-ended retainer.</p>
+      </details>
+      <details>
+        <summary>Is my data safe?</summary>
+        <p>Raw prompts and outputs never leave your perimeter — only DP-noised aggregate features. Probes run in your VPC. You own every artifact. Full technical detail is in the open-source repo.</p>
+      </details>
+      <details>
+        <summary>Why should I trust the detection?</summary>
+        <p>Because it's falsifiable. The 38-day Claude Sonnet 4 call was made on a seeded, reproducible backtest you can re-run. The methodology is hash-committed up front.</p>
+      </details>
+      <details>
+        <summary>What is the board at the top actually showing?</summary>
+        <p>The public gateway's <span class="mono">/v1/weather</span> endpoint, fetched on a six-hour schedule by a scheduled job and committed next to this page, so your browser reads it instantly and no request of yours ever touches the gateway. The baseline, z-score and CUSUM statistic are recomputed from the observations accumulated since that job started — which is why some lines read <span class="mono">unknown</span> until enough points exist to answer honestly.</p>
+      </details>
+      <details>
+        <summary>What isn't ready yet?</summary>
+        <p>Honest answer: the public network effect (cross-org quorum) compounds with adoption and is early. Today the value is the in-VPC early-warning layer and the neutral monitoring — which stand on their own. I'd rather tell you that than oversell it.</p>
+      </details>
+    </div>
   </div>
 </section>
 
@@ -317,12 +558,12 @@
 <section id="founder">
   <div class="wrap">
     <div class="eyebrow">Built by</div>
-    <div class="founder" style="margin-top:18px">
+    <div class="founder">
       <div class="avatar">TR</div>
-      <div style="flex:1; min-width:260px">
-        <h3 style="font-size:1.25rem">Tetiana Radchenko</h3>
+      <div style="flex:1; min-width:280px">
+        <h3 style="font-size:1.3rem">Tetiana Radchenko</h3>
         <p>AI infrastructure / backend engineer based in Aarhus, Denmark. I built SEISMOGRAPH from scratch to solve the most under-monitored failure mode in production AI: silent, provider-side model drift. Every engagement ships under my personal sign-off.</p>
-        <p class="links" style="margin-top:6px">
+        <p class="links" style="margin-top:8px">
           <a href="https://github.com/Tania-coder" target="_blank" rel="noopener">GitHub</a>
           <a href="https://www.linkedin.com/in/tania-radchenko-dev" target="_blank" rel="noopener">LinkedIn</a>
           <a href="mailto:tatyan.radchenko@gmail.com">Email</a>
@@ -336,11 +577,11 @@
 <div class="footcta" id="start">
   <div class="wrap">
     <h2>One free scan tells you if it's worth your time.</h2>
-    <p class="lead" style="max-width:600px;margin:0 auto 8px">Send me the model APIs you depend on. Within ~48 hours you get your top-3 silent-drift exposures and the metrics that move first — plus a fixed quote if you want the Baseline.</p>
+    <p class="lead" style="max-width:620px;margin:0 auto 8px">Send me the model APIs you depend on. Within ~48 hours you get your top-3 silent-drift exposures and the metrics that move first — plus a fixed quote if you want the Baseline.</p>
     <div class="btns" style="justify-content:center">
       <a class="btn btn-primary" href="mailto:tatyan.radchenko@gmail.com?subject=Drift%20Exposure%20Scan&body=Hi%20Tetiana%2C%20here%20is%20our%20model%20stack%3A%0A%0A-%20Provider%2Fmodel%3A%20%0A-%20What%20it%20powers%3A%20%0A-%20Roughly%20how%20many%20calls%2Fday%3A%20%0A" data-goatcounter-click="cta-final-scan">Request your free Drift Exposure Scan</a>
     </div>
-    <p class="note" style="margin-top:16px">or email me directly: <a href="mailto:tatyan.radchenko@gmail.com" style="color:var(--accent)">tatyan.radchenko@gmail.com</a></p>
+    <p class="note" style="margin-top:18px">or email me directly: <a href="mailto:tatyan.radchenko@gmail.com">tatyan.radchenko@gmail.com</a></p>
     <p class="note" style="margin-top:10px">Early-observer program: the first 10 design partners get the scan free in exchange for honest, publishable feedback.</p>
   </div>
 </div>
@@ -351,6 +592,7 @@
     <div class="links">
       <a href="https://seismograph-weather.onrender.com/dashboard" target="_blank" rel="noopener">Live demo</a>
       <a href="/guides/detect-silent-llm-change/">Guide</a>
+      <a href="/data/weather.json">weather.json</a>
       <a href="https://github.com/Tania-coder/SEISMOGRAPH" target="_blank" rel="noopener">GitHub</a>
       <a href="mailto:tatyan.radchenko@gmail.com">Contact</a>
     </div>
@@ -358,20 +600,312 @@
 </div>
 
 <script data-goatcounter="https://driftdefense.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
 <script>
-(function(){
-  var els = document.querySelectorAll('section, .hero, .footcta, .card');
-  for (var i=0;i<els.length;i++){ els[i].classList.add('reveal'); }
-  if(!('IntersectionObserver' in window)){
-    for (var j=0;j<els.length;j++){ els[j].classList.add('in'); }
-    return;
-  }
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+/* ====================================================================
+   The board.
+
+   Reads data/weather.json — same-origin, committed by the scheduled
+   pulse job, so this never touches the gateway from the reader's
+   browser (which CORS would block anyway) and never leaks a visitor
+   to a third party.
+
+   Every rendered value comes from that file. Nothing is simulated.
+   ==================================================================== */
+(function () {
+  "use strict";
+
+  var STATE_CLASS = { yes: "s-yes", no: "s-no", unknown: "s-unknown" };
+  var esc = function (s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
-  }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
-  for (var k=0;k<els.length;k++){ io.observe(els[k]); }
+  };
+
+  function fmtAge(h) {
+    if (typeof h !== "number") return "—";
+    if (h < 1) return Math.round(h * 60) + " min";
+    if (h < 48) return h.toFixed(1) + " h";
+    return (h / 24).toFixed(1) + " d";
+  }
+
+  function fmtAgo(iso) {
+    if (!iso) return "—";
+    var t = Date.parse(iso);
+    if (isNaN(t)) return "—";
+    var mins = Math.max(0, Math.round((Date.now() - t) / 60000));
+    if (mins < 60) return mins + " min ago";
+    if (mins < 2880) return (mins / 60).toFixed(1) + " h ago";
+    return (mins / 1440).toFixed(1) + " d ago";
+  }
+
+  /* ---- the trace -------------------------------------------------
+     Plots the real observation series. Two points draw two points.
+     A silent leg is drawn dashed and amber, because silence must not
+     look like a healthy flat line — that confusion is the entire
+     failure mode this product exists to catch.                       */
+  function drawTrace(canvas, model) {
+    var dpr = window.devicePixelRatio || 1;
+    var w = canvas.clientWidth, h = canvas.clientHeight;
+    if (!w || !h) return;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    var g = canvas.getContext("2d");
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.clearRect(0, 0, w, h);
+
+    var css = getComputedStyle(document.documentElement);
+    var line = css.getPropertyValue("--line").trim() || "#1E212B";
+    var jade = css.getPropertyValue("--jade").trim() || "#4FD1C5";
+    var amber = css.getPropertyValue("--amber").trim() || "#E3A857";
+    var verm = css.getPropertyValue("--vermillion").trim() || "#E0604B";
+
+    // baseline grid
+    g.strokeStyle = line; g.lineWidth = 1;
+    for (var i = 1; i < 4; i++) {
+      var y = (h / 4) * i + 0.5;
+      g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke();
+    }
+
+    var series = (model.series || []).filter(function (p) {
+      return typeof p.rate === "number";
+    });
+
+    if (series.length < 2) {
+      g.fillStyle = css.getPropertyValue("--muted").trim() || "#878C9B";
+      g.font = "11px ui-monospace, SFMono-Regular, Menlo, monospace";
+      g.fillText(
+        series.length + " observation" + (series.length === 1 ? "" : "s") +
+        " — the trace densifies as the schedule runs",
+        2, h / 2 - 6
+      );
+      if (series.length === 1) {
+        g.fillStyle = jade;
+        g.beginPath(); g.arc(w - 6, h / 2 + 14, 3, 0, Math.PI * 2); g.fill();
+      }
+      return;
+    }
+
+    var vals = series.map(function (p) { return p.rate; });
+    var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+    var pad = (hi - lo) * 0.35 || 0.004;
+    lo -= pad; hi += pad;
+
+    var stale = model.status === "STALE";
+    var drifting = model.status === "DRIFTING";
+    var stroke = drifting ? verm : (stale ? amber : jade);
+
+    var x = function (i) { return (i / (series.length - 1)) * (w - 8) + 4; };
+    var y = function (v) { return h - 10 - ((v - lo) / (hi - lo)) * (h - 22); };
+
+    // area wash
+    var grad = g.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, stroke + "26");
+    grad.addColorStop(1, stroke + "00");
+    g.beginPath();
+    g.moveTo(x(0), y(series[0].rate));
+    series.forEach(function (p, i) { g.lineTo(x(i), y(p.rate)); });
+    g.lineTo(x(series.length - 1), h); g.lineTo(x(0), h); g.closePath();
+    g.fillStyle = grad; g.fill();
+
+    // the line
+    g.beginPath();
+    series.forEach(function (p, i) {
+      i ? g.lineTo(x(i), y(p.rate)) : g.moveTo(x(i), y(p.rate));
+    });
+    g.strokeStyle = stroke;
+    g.lineWidth = 1.6;
+    g.lineJoin = "round";
+    if (stale) g.setLineDash([4, 4]);
+    g.stroke();
+    g.setLineDash([]);
+
+    // the head
+    var lx = x(series.length - 1), ly = y(series[series.length - 1].rate);
+    g.fillStyle = stroke;
+    g.beginPath(); g.arc(lx, ly, 3, 0, Math.PI * 2); g.fill();
+    if (!stale && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      g.globalAlpha = 0.28;
+      g.beginPath(); g.arc(lx, ly, 7, 0, Math.PI * 2); g.fill();
+      g.globalAlpha = 1;
+    }
+  }
+
+  function hexagram(checks) {
+    return '<div class="hex">' + checks.map(function (c) {
+      var cls = STATE_CLASS[c.state] || "s-unknown";
+      var bars = c.state === "yes"
+        ? '<div class="bars yang"><i></i></div>'
+        : '<div class="bars yin"><i></i><i></i></div>';
+      return '<div class="hexline ' + cls + '">' + bars +
+        '<div class="hexlabel"><b>' + esc(c.label) + '</b><em>' + esc(c.detail) + '</em></div>' +
+        '</div>';
+    }).join("") + "</div>";
+  }
+
+  function legCard(m) {
+    var v = m.status === "STABLE" ? "v-stable"
+          : m.status === "DRIFTING" ? "v-drifting" : "v-stale";
+
+    // Label and value must agree. An uncalibrated leg has no distance
+    // to an alert, so it reports how far the baseline has come instead
+    // of dressing a sample count up as a forecast.
+    var fKey, fVal;
+    if (m.calibrated) {
+      fKey = "Dist. to alert";
+      fVal = m.cusum_pct + "% of h";
+    } else {
+      fKey = "Baseline";
+      fVal = m.history_points + "/" + m.baseline_required + " pts";
+    }
+
+    var el = document.createElement("div");
+    el.className = "leg";
+    el.innerHTML =
+      '<div class="leg-top">' +
+        '<div><div class="leg-name">' + esc(m.model_tuple) + '</div>' +
+        '<div class="leg-sub">last reported ' + esc(fmtAgo(m.window_end)) + '</div></div>' +
+        '<div class="verdict ' + v + '">' + esc(m.status || "unknown") + '</div>' +
+      '</div>' +
+      '<div><canvas class="trace" role="img" aria-label="Observed JSON success rate for ' +
+        esc(m.model_tuple) + '"></canvas>' +
+        '<div class="trace-cap"><span>json success rate · observed</span><span>' +
+        esc((m.series || []).length) + ' pts</span></div></div>' +
+      hexagram(m.checks || []) +
+      '<div class="readout">' +
+        '<div><div class="k">Verdict</div><div class="v">' + m.yes_count + ' / ' + m.no_count + ' / ' + m.unknown_count + '</div></div>' +
+        '<div><div class="k">Window age</div><div class="v">' + esc(fmtAge(m.window_age_hours)) + '</div></div>' +
+        '<div><div class="k">' + fKey + '</div><div class="v">' + esc(fVal) + '</div></div>' +
+      '</div>';
+
+    requestAnimationFrame(function () {
+      var c = el.querySelector("canvas");
+      drawTrace(c, m);
+      window.addEventListener("resize", function () { drawTrace(c, m); });
+    });
+    return el;
+  }
+
+  /* ---- reasoning -------------------------------------------------
+     Deterministic narration of the snapshot. This is not a language
+     model thinking out loud; it is the same arithmetic the engine
+     applies, said in words, so a reader can check it against the
+     numbers beside it.                                               */
+  function reason(data) {
+    var out = [];
+    var models = data.models || [];
+    var reporting = models.filter(function (m) {
+      return (m.checks || [])[0] && m.checks[0].state === "yes";
+    });
+    var silent = models.filter(function (m) { return m.status === "STALE"; });
+    var drifting = models.filter(function (m) { return m.status === "DRIFTING"; });
+
+    out.push("Board holds <b>" + models.length + " model leg" +
+      (models.length === 1 ? "" : "s") + "</b>: " + reporting.length +
+      " reporting inside the " + (data.stale_after_hours || 30) +
+      "h freshness threshold, " + silent.length + " silent.");
+
+    drifting.forEach(function (m) {
+      out.push(["flag", "<b>" + esc(m.model_tuple) + "</b> is publishing DRIFTING — a quorum-verified alert landed within 24h. This is the condition the whole system exists to surface."]);
+    });
+
+    silent.forEach(function (m) {
+      var mult = (m.window_age_hours / (data.stale_after_hours || 30)).toFixed(1);
+      out.push(["flag", "<b>" + esc(m.model_tuple) + "</b> has been quiet for " +
+        esc(fmtAge(m.window_age_hours)) + " — " + mult + "× the stale threshold. " +
+        "It is published as STALE, not STABLE. I hold no opinion about that model's health; " +
+        "I am telling you I cannot currently see it, which is a different and more useful statement."]);
+    });
+
+    var uncal = models.filter(function (m) { return !m.calibrated; });
+    if (uncal.length) {
+      var need = uncal[0].baseline_required;
+      out.push("Baseline is still forming on " + uncal.length + " leg" +
+        (uncal.length === 1 ? "" : "s") + " (" + need +
+        " observations needed). Until then the in-band and CUSUM lines publish <b>unknown</b> rather than pass — " +
+        "a z-score against two points would be arithmetic theatre.");
+    }
+
+    models.filter(function (m) { return m.calibrated; }).forEach(function (m) {
+      out.push("<b>" + esc(m.model_tuple) + "</b>: baseline μ₀ " + m.mu0 +
+        ", σ₀ " + m.sigma0 + ". Current rate sits " + m.z +
+        "σ from it, CUSUM S⁻ at " + m.cusum + " against a decision interval of " +
+        m.cusum_h + " — " + m.cusum_pct + "% of the distance to an alert. " +
+        "That is a proportion of a threshold, not a calibrated probability, and it is labelled as such.");
+    });
+
+    out.push("Cost posture: this board is refreshed by one scheduled job running pure-stdlib Python on free infrastructure. " +
+      "It makes <b>no model calls</b> and consumes no inference budget — the expensive thing about drift detection should be the drift, not the watching.");
+
+    return out;
+  }
+
+  function render(data) {
+    var legs = document.getElementById("legs");
+    legs.innerHTML = "";
+
+    if (!data.models || !data.models.length) {
+      legs.innerHTML = '<div class="leg"><div class="leg-name">No legs on the board.</div></div>';
+    } else {
+      data.models.forEach(function (m) { legs.appendChild(legCard(m)); });
+    }
+
+    var ul = document.getElementById("reasoning");
+    ul.innerHTML = reason(data).map(function (item) {
+      if (Array.isArray(item)) return '<li class="' + item[0] + '">' + item[1] + "</li>";
+      return "<li>" + item + "</li>";
+    }).join("");
+
+    var reach = data.reachable === false;
+    document.getElementById("provenance").innerHTML =
+      "<span>snapshot " + esc(fmtAgo(data.generated_at)) + "</span>" +
+      "<span>source /v1/weather</span>" +
+      "<span>" + esc(data.observations || 0) + " observations retained</span>" +
+      "<span>refresh every 6h by scheduled job</span>" +
+      (reach ? '<span style="color:var(--amber)">gateway unreachable at last check — showing last good snapshot</span>' : "");
+  }
+
+  fetch("data/weather.json", { cache: "no-cache" })
+    .then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    })
+    .then(render)
+    .catch(function (e) {
+      document.getElementById("legs").innerHTML =
+        '<div class="leg"><div class="leg-name">Board unavailable</div>' +
+        '<p class="note">Could not read the committed snapshot (' + esc(e.message) + '). ' +
+        'The <a href="https://seismograph-weather.onrender.com/dashboard">public dashboard</a> is the source of record.</p></div>';
+      document.getElementById("reasoning").innerHTML =
+        "<li>No snapshot to reason over. Reporting that plainly rather than drawing an empty green board.</li>";
+    });
+})();
+</script>
+
+<script>
+/* progressive reveal — information-free motion, disabled for reduced-motion */
+(function () {
+  var els = document.querySelectorAll("section, .hero, .footcta");
+  if (!("IntersectionObserver" in window) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  for (var i = 0; i < els.length; i++) els[i].classList.add("reveal");
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+  for (var k = 0; k < els.length; k++) io.observe(els[k]);
+})();
+</script>
+
+<script>
+(function () {
+  var f = document.getElementById("sg-alert-form");
+  if (!f) return;
+  f.addEventListener("submit", function () {
+    if (window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({ path: "cta-alert-signup", title: "Drift alert signup", event: true });
+    }
+  });
 })();
 </script>
 </body>
