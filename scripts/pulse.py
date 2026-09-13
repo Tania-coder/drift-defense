@@ -311,7 +311,16 @@ def main() -> int:
         for leg in legs:
             model = leg.get("model_tuple")
             window_end = leg.get("window_end")
-            if window_end and last_window.get(model) == window_end:
+            # No window means no observation to record. Without this, a
+            # leg that never reports escapes the dedupe key (None never
+            # matches) and appends a null-rate row every single run --
+            # ~1460 a year, eventually evicting real observations under
+            # MAX_HISTORY. It is still rendered on the board from the
+            # live payload; it just contributes no history point.
+            if not window_end:
+                repeats += 1
+                continue
+            if last_window.get(model) == window_end:
                 repeats += 1
                 continue
             fh.write(json.dumps({
