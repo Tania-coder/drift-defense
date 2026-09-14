@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-09-14T05:00:09Z",
+ "generated_at": "2026-09-14T12:53:08Z",
  "source": "https://seismograph-weather.onrender.com/v1/weather",
  "reachable": true,
  "stale_after_hours": 30.0,
- "observations": 2,
+ "observations": 3,
  "models": [
   {
    "model_tuple": "google/gemini-3.5-flash-lite",
@@ -12,16 +12,21 @@
      "t": "2026-09-13T19:45:05Z",
      "rate": 0.9834444444444446,
      "age": 0.21216893027777778
+    },
+    {
+     "t": "2026-09-14T12:53:08Z",
+     "rate": 0.9724999999999999,
+     "age": 2.1595898236111113
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 9.46322518388889,
-   "json_success_rate": 0.9834444444444446,
-   "avg_output_length": 130.46051000000003,
+   "window_age_hours": 2.1595898236111113,
+   "json_success_rate": 0.9724999999999999,
+   "avg_output_length": 130.30369000000002,
    "sample_count": 10,
    "last_alert_timestamp": null,
-   "window_end": "2026-09-13T19:32:21.673293Z",
-   "history_points": 1,
+   "window_end": "2026-09-14T10:43:34.309755Z",
+   "history_points": 2,
    "baseline_required": 8,
    "cusum_h": 5.0,
    "calibrated": false,
@@ -31,7 +36,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 9.5h vs 30h threshold"
+     "detail": "window age 2.2h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -43,19 +48,19 @@
      "id": "band",
      "label": "JSON fidelity in band",
      "state": "unknown",
-     "detail": "baseline forming - 1/8 points"
+     "detail": "baseline forming - 2/8 points"
     },
     {
      "id": "length",
      "label": "Output length reported",
      "state": "yes",
-     "detail": "130.5 tokens avg"
+     "detail": "130.3 tokens avg"
     },
     {
      "id": "cusum",
      "label": "CUSUM below threshold",
      "state": "unknown",
-     "detail": "baseline forming - 1/8 points"
+     "detail": "baseline forming - 2/8 points"
     },
     {
      "id": "quorum",
@@ -78,7 +83,7 @@
     }
    ],
    "status": "STALE",
-   "window_age_hours": 283.3583117233333,
+   "window_age_hours": 291.2415204913889,
    "json_success_rate": 0.9785555555555556,
    "avg_output_length": 89.42253,
    "sample_count": 10,
@@ -94,7 +99,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "no",
-     "detail": "window age 283.4h vs 30h threshold"
+     "detail": "window age 291.2h vs 30h threshold"
     },
     {
      "id": "depth",
