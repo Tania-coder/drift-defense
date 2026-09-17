@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-09-17T17:02:13Z",
+ "generated_at": "2026-09-17T21:25:07Z",
  "source": "https://seismograph-weather.onrender.com/v1/weather",
  "reachable": true,
  "stale_after_hours": 30.0,
- "observations": 13,
+ "observations": 14,
  "models": [
   {
    "model_tuple": "google/gemini-3.5-flash-lite",
@@ -50,7 +50,7 @@
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 6.967490503055555,
+   "window_age_hours": 11.349273571388888,
    "json_success_rate": 0.9758333333333333,
    "avg_output_length": 133.85237999999998,
    "sample_count": 10,
@@ -80,7 +80,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 7.0h vs 30h threshold"
+     "detail": "window age 11.3h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -144,16 +144,21 @@
      "t": "2026-09-17T11:45:45Z",
      "rate": 0.9624444444444444,
      "age": 1.7557790516666667
+    },
+    {
+     "t": "2026-09-17T21:25:07Z",
+     "rate": 0.965111111111111,
+     "age": 1.0705761319444445
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 7.0302611369444445,
-   "json_success_rate": 0.9624444444444444,
-   "avg_output_length": 90.88602,
+   "window_age_hours": 1.0705761319444445,
+   "json_success_rate": 0.965111111111111,
+   "avg_output_length": 90.58232000000001,
    "sample_count": 10,
    "last_alert_timestamp": null,
-   "window_end": "2026-09-17T10:00:24.478478Z",
-   "history_points": 5,
+   "window_end": "2026-09-17T20:20:53.773994Z",
+   "history_points": 6,
    "baseline_required": 8,
    "cusum_h": 5.0,
    "calibrated": false,
@@ -163,7 +168,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 7.0h vs 30h threshold"
+     "detail": "window age 1.1h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -175,19 +180,19 @@
      "id": "band",
      "label": "JSON fidelity in band",
      "state": "unknown",
-     "detail": "baseline forming - 5/8 points"
+     "detail": "baseline forming - 6/8 points"
     },
     {
      "id": "length",
      "label": "Output length reported",
      "state": "yes",
-     "detail": "90.9 tokens avg"
+     "detail": "90.6 tokens avg"
     },
     {
      "id": "cusum",
      "label": "CUSUM below threshold",
      "state": "unknown",
-     "detail": "baseline forming - 5/8 points"
+     "detail": "baseline forming - 6/8 points"
     },
     {
      "id": "quorum",
