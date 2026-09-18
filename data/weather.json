@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-09-18T16:26:49Z",
+ "generated_at": "2026-09-18T20:56:22Z",
  "source": "https://seismograph-weather.onrender.com/v1/weather",
  "reachable": true,
  "stale_after_hours": 30.0,
- "observations": 16,
+ "observations": 18,
  "models": [
   {
    "model_tuple": "google/gemini-3.5-flash-lite",
@@ -52,31 +52,37 @@
      "t": "2026-09-18T11:19:53Z",
      "rate": 0.977,
      "age": 1.4823840769444445
+    },
+    {
+     "t": "2026-09-18T20:56:22Z",
+     "rate": 0.976,
+     "age": 1.2536342952777777
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 6.597900400555555,
-   "json_success_rate": 0.977,
-   "avg_output_length": 134.02191999999997,
+   "window_age_hours": 1.2536342952777777,
+   "json_success_rate": 0.976,
+   "avg_output_length": 135.14157,
    "sample_count": 10,
    "last_alert_timestamp": null,
-   "window_end": "2026-09-18T09:50:57.178703Z",
-   "history_points": 9,
+   "window_end": "2026-09-18T19:41:08.884460Z",
+   "history_points": 10,
    "baseline_required": 8,
    "cusum_h": 5.0,
    "calibrated": true,
-   "mu0": 0.975093,
-   "sigma0": 0.00384,
-   "z": 0.5,
+   "mu0": 0.975183,
+   "sigma0": 0.003632,
+   "z": 0.22,
    "cusum": 0.0,
    "cusum_pct": 0.0,
    "cusum_trace": [
     0.0,
-    0.1752,
-    0.5818,
-    1.2633,
-    1.2504,
-    0.5575,
+    0.2389,
+    0.7225,
+    1.4967,
+    1.5367,
+    0.8578,
+    0.1788,
     0.0,
     0.0,
     0.0
@@ -86,7 +92,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 6.6h vs 30h threshold"
+     "detail": "window age 1.3h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -98,13 +104,13 @@
      "id": "band",
      "label": "JSON fidelity in band",
      "state": "yes",
-     "detail": "z = 0.5 sigma from baseline"
+     "detail": "z = 0.22 sigma from baseline"
     },
     {
      "id": "length",
      "label": "Output length reported",
      "state": "yes",
-     "detail": "134.0 tokens avg"
+     "detail": "135.1 tokens avg"
     },
     {
      "id": "cusum",
@@ -160,26 +166,45 @@
      "t": "2026-09-18T11:19:53Z",
      "rate": 0.965111111111111,
      "age": 1.5466062205555555
+    },
+    {
+     "t": "2026-09-18T20:56:22Z",
+     "rate": 0.9633333333333333,
+     "age": 1.315671443888889
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 6.662122876388889,
-   "json_success_rate": 0.965111111111111,
-   "avg_output_length": 90.34309999999999,
+   "window_age_hours": 1.315671443888889,
+   "json_success_rate": 0.9633333333333333,
+   "avg_output_length": 91.59358,
    "sample_count": 10,
    "last_alert_timestamp": null,
-   "window_end": "2026-09-18T09:47:05.986747Z",
-   "history_points": 7,
+   "window_end": "2026-09-18T19:37:25.574295Z",
+   "history_points": 8,
    "baseline_required": 8,
    "cusum_h": 5.0,
-   "calibrated": false,
-   "cusum_trace": [],
+   "calibrated": true,
+   "mu0": 0.967278,
+   "sigma0": 0.006055,
+   "z": -0.65,
+   "cusum": 0.6747,
+   "cusum_pct": 13.5,
+   "cusum_trace": [
+    0.0,
+    0.0,
+    0.0,
+    0.5093,
+    0.8076,
+    0.6654,
+    0.5233,
+    0.6747
+   ],
    "checks": [
     {
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 6.7h vs 30h threshold"
+     "detail": "window age 1.3h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -190,20 +215,20 @@
     {
      "id": "band",
      "label": "JSON fidelity in band",
-     "state": "unknown",
-     "detail": "baseline forming - 7/8 points"
+     "state": "yes",
+     "detail": "z = -0.65 sigma from baseline"
     },
     {
      "id": "length",
      "label": "Output length reported",
      "state": "yes",
-     "detail": "90.3 tokens avg"
+     "detail": "91.6 tokens avg"
     },
     {
      "id": "cusum",
      "label": "CUSUM below threshold",
-     "state": "unknown",
-     "detail": "baseline forming - 7/8 points"
+     "state": "yes",
+     "detail": "S- 0.6747 / h 5.0"
     },
     {
      "id": "quorum",
@@ -212,9 +237,9 @@
      "detail": "none recorded"
     }
    ],
-   "yes_count": 4,
+   "yes_count": 6,
    "no_count": 0,
-   "unknown_count": 2
+   "unknown_count": 0
   }
  ]
 }
