@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T20:56:22Z",
+ "generated_at": "2026-09-19T04:41:01Z",
  "source": "https://seismograph-weather.onrender.com/v1/weather",
  "reachable": true,
  "stale_after_hours": 30.0,
@@ -60,7 +60,7 @@
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 1.2536342952777777,
+   "window_age_hours": 8.9979589475,
    "json_success_rate": 0.976,
    "avg_output_length": 135.14157,
    "sample_count": 10,
@@ -92,7 +92,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 1.3h vs 30h threshold"
+     "detail": "window age 9.0h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -174,7 +174,7 @@
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 1.315671443888889,
+   "window_age_hours": 9.059996228055557,
    "json_success_rate": 0.9633333333333333,
    "avg_output_length": 91.59358,
    "sample_count": 10,
@@ -204,7 +204,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 1.3h vs 30h threshold"
+     "detail": "window age 9.1h vs 30h threshold"
     },
     {
      "id": "depth",
