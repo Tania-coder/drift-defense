@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-09-19T04:41:01Z",
+ "generated_at": "2026-09-19T11:03:50Z",
  "source": "https://seismograph-weather.onrender.com/v1/weather",
  "reachable": true,
  "stale_after_hours": 30.0,
- "observations": 18,
+ "observations": 20,
  "models": [
   {
    "model_tuple": "google/gemini-3.5-flash-lite",
@@ -57,32 +57,38 @@
      "t": "2026-09-18T20:56:22Z",
      "rate": 0.976,
      "age": 1.2536342952777777
+    },
+    {
+     "t": "2026-09-19T11:03:50Z",
+     "rate": 0.9913888888888888,
+     "age": 1.4656716658333333
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 8.9979589475,
-   "json_success_rate": 0.976,
-   "avg_output_length": 135.14157,
+   "window_age_hours": 1.4656716658333333,
+   "json_success_rate": 0.9913888888888888,
+   "avg_output_length": 134.69118999999998,
    "sample_count": 10,
    "last_alert_timestamp": null,
-   "window_end": "2026-09-18T19:41:08.884460Z",
-   "history_points": 10,
+   "window_end": "2026-09-19T09:35:54.461434Z",
+   "history_points": 11,
    "baseline_required": 8,
    "cusum_h": 5.0,
    "calibrated": true,
-   "mu0": 0.975183,
-   "sigma0": 0.003632,
-   "z": 0.22,
+   "mu0": 0.976657,
+   "sigma0": 0.005979,
+   "z": 2.46,
    "cusum": 0.0,
    "cusum_pct": 0.0,
    "cusum_trace": [
     0.0,
-    0.2389,
-    0.7225,
-    1.4967,
-    1.5367,
-    0.8578,
-    0.1788,
+    0.1952,
+    0.5391,
+    1.0596,
+    1.134,
+    0.7717,
+    0.4094,
+    0.0471,
     0.0,
     0.0,
     0.0
@@ -92,7 +98,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 9.0h vs 30h threshold"
+     "detail": "window age 1.5h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -104,13 +110,13 @@
      "id": "band",
      "label": "JSON fidelity in band",
      "state": "yes",
-     "detail": "z = 0.22 sigma from baseline"
+     "detail": "z = 2.46 sigma from baseline"
     },
     {
      "id": "length",
      "label": "Output length reported",
      "state": "yes",
-     "detail": "135.1 tokens avg"
+     "detail": "134.7 tokens avg"
     },
     {
      "id": "cusum",
@@ -171,40 +177,46 @@
      "t": "2026-09-18T20:56:22Z",
      "rate": 0.9633333333333333,
      "age": 1.315671443888889
+    },
+    {
+     "t": "2026-09-19T11:03:50Z",
+     "rate": 0.9764444444444444,
+     "age": 1.53523509
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 9.059996228055557,
-   "json_success_rate": 0.9633333333333333,
-   "avg_output_length": 91.59358,
+   "window_age_hours": 1.53523509,
+   "json_success_rate": 0.9764444444444444,
+   "avg_output_length": 91.38568000000001,
    "sample_count": 10,
    "last_alert_timestamp": null,
-   "window_end": "2026-09-18T19:37:25.574295Z",
-   "history_points": 8,
+   "window_end": "2026-09-19T09:31:44.044588Z",
+   "history_points": 9,
    "baseline_required": 8,
    "cusum_h": 5.0,
    "calibrated": true,
-   "mu0": 0.967278,
-   "sigma0": 0.006055,
-   "z": -0.65,
-   "cusum": 0.6747,
-   "cusum_pct": 13.5,
+   "mu0": 0.968296,
+   "sigma0": 0.006435,
+   "z": 1.27,
+   "cusum": 0.0,
+   "cusum_pct": 0.0,
    "cusum_trace": [
     0.0,
     0.0,
     0.0,
-    0.5093,
-    0.8076,
-    0.6654,
-    0.5233,
-    0.6747
+    0.6079,
+    1.0172,
+    1.0121,
+    1.0071,
+    1.2783,
+    0.0
    ],
    "checks": [
     {
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 9.1h vs 30h threshold"
+     "detail": "window age 1.5h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -216,19 +228,19 @@
      "id": "band",
      "label": "JSON fidelity in band",
      "state": "yes",
-     "detail": "z = -0.65 sigma from baseline"
+     "detail": "z = 1.27 sigma from baseline"
     },
     {
      "id": "length",
      "label": "Output length reported",
      "state": "yes",
-     "detail": "91.6 tokens avg"
+     "detail": "91.4 tokens avg"
     },
     {
      "id": "cusum",
      "label": "CUSUM below threshold",
      "state": "yes",
-     "detail": "S- 0.6747 / h 5.0"
+     "detail": "S- 0.0 / h 5.0"
     },
     {
      "id": "quorum",
