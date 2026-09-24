@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-09-24T04:55:57Z",
+ "generated_at": "2026-09-24T11:50:29Z",
  "source": "https://seismograph-weather.onrender.com/v1/weather",
  "reachable": true,
  "stale_after_hours": 30.0,
- "observations": 29,
+ "observations": 30,
  "models": [
   {
    "model_tuple": "google/gemini-3.5-flash-lite",
@@ -107,38 +107,43 @@
      "t": "2026-09-23T21:32:23Z",
      "rate": 0.9886111111111111,
      "age": 1.0985465575
+    },
+    {
+     "t": "2026-09-24T11:50:29Z",
+     "rate": 0.9895000000000002,
+     "age": 1.715802796111111
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 8.491353888055555,
-   "json_success_rate": 0.9886111111111111,
-   "avg_output_length": 133.04244999999997,
+   "window_age_hours": 1.715802796111111,
+   "json_success_rate": 0.9895000000000002,
+   "avg_output_length": 134.60970000000003,
    "sample_count": 10,
    "last_alert_timestamp": null,
-   "window_end": "2026-09-23T20:26:28.214175Z",
-   "history_points": 20,
+   "window_end": "2026-09-24T10:07:32.228732Z",
+   "history_points": 21,
    "baseline_required": 8,
    "cusum_h": 5.0,
    "calibrated": true,
-   "mu0": 0.983272,
-   "sigma0": 0.008773,
-   "z": 0.61,
+   "mu0": 0.983575,
+   "sigma0": 0.008883,
+   "z": 0.67,
    "cusum": 0.0,
    "cusum_pct": 0.0,
    "cusum_trace": [
+    0.7467,
+    1.5935,
+    2.5591,
+    3.2246,
+    3.5961,
+    3.9675,
+    4.339,
+    4.5792,
+    4.9319,
+    3.5523,
+    2.0288,
+    0.5304,
     0.0,
-    0.7279,
-    1.557,
-    2.5065,
-    3.1521,
-    3.5,
-    3.8479,
-    4.1958,
-    4.4107,
-    4.7396,
-    3.3145,
-    1.7437,
-    0.1982,
     0.0,
     0.0,
     0.0,
@@ -152,7 +157,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 8.5h vs 30h threshold"
+     "detail": "window age 1.7h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -164,13 +169,13 @@
      "id": "band",
      "label": "JSON fidelity in band",
      "state": "yes",
-     "detail": "z = 0.61 sigma from baseline"
+     "detail": "z = 0.67 sigma from baseline"
     },
     {
      "id": "length",
      "label": "Output length reported",
      "state": "yes",
-     "detail": "133.0 tokens avg"
+     "detail": "134.6 tokens avg"
     },
     {
      "id": "cusum",
@@ -239,7 +244,7 @@
     }
    ],
    "status": "STALE",
-   "window_age_hours": 115.40362694833334,
+   "window_age_hours": 122.31252309861111,
    "json_success_rate": 0.9764444444444444,
    "avg_output_length": 91.38568000000001,
    "sample_count": 10,
@@ -270,7 +275,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "no",
-     "detail": "window age 115.4h vs 30h threshold"
+     "detail": "window age 122.3h vs 30h threshold"
     },
     {
      "id": "depth",
