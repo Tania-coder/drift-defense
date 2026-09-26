@@ -32,3 +32,4 @@
 {"t":"2026-09-25T11:54:37Z","model_tuple":"google/gemini-3.5-flash-lite","status":"STABLE","json_success_rate":0.990777777777778,"avg_output_length":133.21472,"window_age_hours":1.6377481008333332,"window_end":"2026-09-25T10:16:21.066216Z"}
 {"t":"2026-09-25T21:37:08Z","model_tuple":"google/gemini-3.5-flash-lite","status":"STABLE","json_success_rate":0.9818333333333333,"avg_output_length":133.66871,"window_age_hours":1.0505209772222222,"window_end":"2026-09-25T20:34:06.376719Z"}
 {"t":"2026-09-26T11:28:45Z","model_tuple":"google/gemini-3.5-flash-lite","status":"STABLE","json_success_rate":0.9818333333333333,"avg_output_length":133.30397,"window_age_hours":1.534817903611111,"window_end":"2026-09-26T09:56:39.892966Z"}
+{"t":"2026-09-26T21:13:10Z","model_tuple":"google/gemini-3.5-flash-lite","status":"STABLE","json_success_rate":0.9832777777777778,"avg_output_length":133.31484,"window_age_hours":1.1162248197222222,"window_end":"2026-09-26T20:06:12.200402Z"}
