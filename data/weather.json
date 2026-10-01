@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-10-01T13:21:22Z",
+ "generated_at": "2026-10-01T22:43:46Z",
  "source": "https://seismograph-weather.onrender.com/v1/weather",
  "reachable": true,
  "stale_after_hours": 30.0,
- "observations": 45,
+ "observations": 47,
  "models": [
   {
    "model_tuple": "google/gemini-3.5-flash-lite",
@@ -177,24 +177,29 @@
      "t": "2026-10-01T13:21:22Z",
      "rate": 0.9816111111111111,
      "age": 1.6408930199999998
+    },
+    {
+     "t": "2026-10-01T22:43:46Z",
+     "rate": 0.9697222222222223,
+     "age": 0.8296895413888888
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 1.6408930199999998,
-   "json_success_rate": 0.9816111111111111,
-   "avg_output_length": 132.85424,
+   "window_age_hours": 0.8296895413888888,
+   "json_success_rate": 0.9697222222222223,
+   "avg_output_length": 133.49820999999997,
    "sample_count": 10,
    "last_alert_timestamp": null,
-   "window_end": "2026-10-01T11:42:55.153578Z",
-   "history_points": 34,
+   "window_end": "2026-10-01T21:53:59.789729Z",
+   "history_points": 35,
    "baseline_required": 8,
    "cusum_h": 5.0,
    "calibrated": true,
-   "mu0": 0.985939,
-   "sigma0": 0.005505,
-   "z": -0.79,
-   "cusum": 3.3448,
-   "cusum_pct": 66.9,
+   "mu0": 0.984744,
+   "sigma0": 0.006288,
+   "z": -2.39,
+   "cusum": 3.8079,
+   "cusum_pct": 76.2,
    "cusum_trace": [
     0.0,
     0.0,
@@ -205,24 +210,24 @@
     0.0,
     0.0,
     0.0,
-    0.2458,
-    0.4916,
-    0.475,
-    0.4584,
-    0.4419,
     0.0,
     0.0,
-    1.3559,
-    2.9945,
-    3.0586,
-    3.3448
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.9347,
+    2.1168,
+    1.9207,
+    1.919,
+    3.8079
    ],
    "checks": [
     {
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 1.6h vs 30h threshold"
+     "detail": "window age 0.8h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -234,19 +239,19 @@
      "id": "band",
      "label": "JSON fidelity in band",
      "state": "yes",
-     "detail": "z = -0.79 sigma from baseline"
+     "detail": "z = -2.39 sigma from baseline"
     },
     {
      "id": "length",
      "label": "Output length reported",
      "state": "yes",
-     "detail": "132.9 tokens avg"
+     "detail": "133.5 tokens avg"
     },
     {
      "id": "cusum",
      "label": "CUSUM below threshold",
      "state": "yes",
-     "detail": "S- 3.3448 / h 5.0"
+     "detail": "S- 3.8079 / h 5.0"
     },
     {
      "id": "quorum",
@@ -316,34 +321,40 @@
      "t": "2026-10-01T13:21:22Z",
      "rate": 0.9807222222222223,
      "age": 1.720891755
+    },
+    {
+     "t": "2026-10-01T22:43:46Z",
+     "rate": 0.9856666666666667,
+     "age": 0.8902516669444444
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 1.720891755,
-   "json_success_rate": 0.9807222222222223,
-   "avg_output_length": 91.57758000000001,
+   "window_age_hours": 0.8902516669444444,
+   "json_success_rate": 0.9856666666666667,
+   "avg_output_length": 91.60049000000001,
    "sample_count": 10,
    "last_alert_timestamp": null,
-   "window_end": "2026-10-01T11:38:07.179679Z",
-   "history_points": 11,
+   "window_end": "2026-10-01T21:50:21.783257Z",
+   "history_points": 12,
    "baseline_required": 8,
    "cusum_h": 5.0,
    "calibrated": true,
-   "mu0": 0.970172,
-   "sigma0": 0.007172,
-   "z": 1.47,
+   "mu0": 0.971463,
+   "sigma0": 0.008171,
+   "z": 1.74,
    "cusum": 0.0,
    "cusum_pct": 0.0,
    "cusum_trace": [
     0.0,
     0.0,
     0.0,
-    0.7556,
-    1.3331,
-    1.5387,
-    1.7444,
-    2.1979,
-    0.8233,
+    0.7601,
+    1.3638,
+    1.6412,
+    1.9186,
+    2.4135,
+    1.3038,
+    0.1874,
     0.0,
     0.0
    ],
@@ -352,7 +363,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 1.7h vs 30h threshold"
+     "detail": "window age 0.9h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -364,7 +375,7 @@
      "id": "band",
      "label": "JSON fidelity in band",
      "state": "yes",
-     "detail": "z = 1.47 sigma from baseline"
+     "detail": "z = 1.74 sigma from baseline"
     },
     {
      "id": "length",
