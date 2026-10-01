@@ -4,18 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SEISMOGRAPH — LLM Drift Defense for production AI teams</title>
-<meta name="description" content="An early-warning service for silent LLM provider drift. When a model API quietly changes underneath you, we catch it before your users do. Free Drift Exposure Scan; fixed-price Drift Baseline.">
+<meta name="description" content="An early-warning service for silent LLM provider drift. When a model API quietly changes underneath you, we catch it before your users do. Free Drift Exposure Scan.">
 <meta name="theme-color" content="#0B0C0F">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://driftdefense.dev/">
 <meta property="og:title" content="SEISMOGRAPH — LLM Drift Defense">
-<meta property="og:description" content="Early-warning for silent LLM provider drift. Free Drift Exposure Scan; fixed-price Drift Baseline.">
+<meta property="og:description" content="Early-warning for silent LLM provider drift. Free Drift Exposure Scan.">
 <meta property="og:image" content="https://driftdefense.dev/dashboard.png">
 <meta property="og:image:width" content="1100">
 <meta property="og:image:height" content="540">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SEISMOGRAPH — LLM Drift Defense">
-<meta name="twitter:description" content="Early-warning for silent LLM provider drift. Free Drift Exposure Scan; fixed-price Drift Baseline.">
+<meta name="twitter:description" content="Early-warning for silent LLM provider drift. Free Drift Exposure Scan.">
 <meta name="twitter:image" content="https://driftdefense.dev/dashboard.png">
 <link rel="canonical" href="https://driftdefense.dev/">
 <script type="application/ld+json">
@@ -23,16 +23,11 @@
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "SEISMOGRAPH — LLM Drift Defense",
-  "description": "Early-warning service for silent LLM provider drift. Free Drift Exposure Scan; fixed-price Drift Baseline; ongoing Drift Desk.",
+  "description": "Early-warning service for silent LLM provider drift. Free Drift Exposure Scan.",
   "url": "https://driftdefense.dev/",
   "founder": {"@type": "Person", "name": "Tetiana Radchenko"},
   "areaServed": "Worldwide",
-  "address": {"@type": "PostalAddress", "addressLocality": "Aarhus", "addressCountry": "DK"},
-  "makesOffer": [
-    {"@type": "Offer", "name": "Drift Exposure Scan", "price": "0", "priceCurrency": "EUR"},
-    {"@type": "Offer", "name": "Drift Baseline", "price": "2500", "priceCurrency": "EUR"},
-    {"@type": "Offer", "name": "Drift Desk", "priceSpecification": {"@type": "PriceSpecification", "minPrice": 3000, "maxPrice": 6000, "priceCurrency": "EUR", "unitText": "MONTH"}}
-  ]
+  "address": {"@type": "PostalAddress", "addressLocality": "Aarhus", "addressCountry": "DK"}
 }
 </script>
 <style>
@@ -418,61 +413,9 @@
       <div class="step">
         <div class="num">Step 3 · ~1 week</div>
         <h3 style="margin-top:.5em">Probes go live</h3>
-        <p>If the map warrants it: canary probes on your real model tuples, tuned thresholds, alerts wired into Slack or PagerDuty. Fixed price, reviewable deliverable.</p>
+        <p>If the map warrants it: canary probes on your real model tuples, tuned thresholds, alerts wired into Slack or PagerDuty. Scoped together with you.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- OFFER -->
-<section id="work">
-  <div class="wrap">
-    <div class="eyebrow">How we work</div>
-    <h2>Start free. Scale only if it's worth it.</h2>
-    <p class="lead">Flat pricing, concrete deliverables, fixed timelines. No open-ended “let's chat” retainers to start.</p>
-
-    <div class="grid g3" style="margin:34px 0">
-      <div class="cell">
-        <span class="tag">Start here</span>
-        <h3>Drift Exposure Scan</h3>
-        <div class="price">Free</div>
-        <p class="note">~48 hours · no system access</p>
-        <ul class="check">
-          <li>Send me your model stack (which APIs you depend on)</li>
-          <li>I map where a silent change would hit you first</li>
-          <li>You get your top-3 drift exposures + the metrics to watch</li>
-        </ul>
-        <p class="note" style="margin-top:16px">Zero risk. You leave with a watchlist worth more than the time it took.</p>
-      </div>
-
-      <div class="cell" style="background:var(--ink-2)">
-        <span class="tag" style="color:var(--jade);border-color:var(--jade)">Most popular</span>
-        <h3>Drift Baseline</h3>
-        <div class="price">€2,500 <small>flat</small></div>
-        <p class="note">~1 week · reviewable deliverable</p>
-        <ul class="check">
-          <li>Canary probes stood up on your real model tuples</li>
-          <li>Behavioral baselines + CUSUM thresholds tuned to your traffic</li>
-          <li>Written exposure report + a concrete alerting plan (Slack/PagerDuty/webhook)</li>
-          <li>You own everything; nothing proprietary leaves your perimeter</li>
-        </ul>
-        <a class="btn btn-primary" style="margin-top:20px" href="#start" data-goatcounter-click="cta-baseline">Book a Baseline</a>
-      </div>
-
-      <div class="cell">
-        <span class="tag">Ongoing</span>
-        <h3>Drift Desk</h3>
-        <div class="price">€3–6k <small>/ month</small></div>
-        <p class="note">standing early-warning line</p>
-        <ul class="check">
-          <li>Continuous watch across your model dependencies</li>
-          <li>A heads-up the moment a provider shifts — plus a monthly “model weather” briefing</li>
-          <li>Priority response when a provider incident hits</li>
-        </ul>
-        <p class="note" style="margin-top:16px">Cheaper than one bad week in production.</p>
-      </div>
-    </div>
-    <p class="note">Need it built into your stack and handed over working? A full <strong style="color:var(--soft)">Proof-of-Process Build</strong> (in-VPC probe fleet wired to your alerting, runbook, handover) is scoped per engagement — ask in your scan.</p>
   </div>
 </section>
 
@@ -535,7 +478,7 @@
       </details>
       <details>
         <summary>What do I actually get?</summary>
-        <p>The free scan: your top-3 drift exposures within ~48h. The Baseline: live canary probes, tuned thresholds, a written report, and an alerting plan — a reviewable deliverable in about a week, not an open-ended retainer.</p>
+        <p>The free scan: your top-3 drift exposures within ~48h. If it's worth going further: live canary probes on your own model tuples, tuned thresholds, a written report and an alerting plan.</p>
       </details>
       <details>
         <summary>Is my data safe?</summary>
@@ -580,7 +523,7 @@
 <div class="footcta" id="start">
   <div class="wrap">
     <h2>One free scan tells you if it's worth your time.</h2>
-    <p class="lead" style="max-width:620px;margin:0 auto 8px">Send me the model APIs you depend on. Within ~48 hours you get your top-3 silent-drift exposures and the metrics that move first — plus a fixed quote if you want the Baseline.</p>
+    <p class="lead" style="max-width:620px;margin:0 auto 8px">Send me the model APIs you depend on. Within ~48 hours you get your top-3 silent-drift exposures and the metrics that move first.</p>
     <div class="btns" style="justify-content:center">
       <a class="btn btn-primary" href="mailto:tatyan.radchenko@gmail.com?subject=Drift%20Exposure%20Scan&body=Hi%20Tetiana%2C%20here%20is%20our%20model%20stack%3A%0A%0A-%20Provider%2Fmodel%3A%20%0A-%20What%20it%20powers%3A%20%0A-%20Roughly%20how%20many%20calls%2Fday%3A%20%0A" data-goatcounter-click="cta-final-scan">Request your free Drift Exposure Scan</a>
     </div>

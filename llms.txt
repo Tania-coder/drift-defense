@@ -56,10 +56,6 @@ the Claude Sonnet 4 silent degradation 38 days before the official postmortem.
 
 - Drift Exposure Scan — free, ~48h, no system access. Top-3 drift exposures
   for a given model stack, plus the metrics that move first.
-- Drift Baseline — EUR 2,500 flat, ~1 week. Canary probes on real model tuples,
-  tuned CUSUM thresholds, written report, alerting plan.
-- Drift Desk — EUR 3–6k/month. Continuous watch, monthly model-weather briefing,
-  priority incident response.
 
 Contact: tatyan.radchenko@gmail.com
 
