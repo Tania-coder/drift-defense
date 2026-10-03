@@ -1,9 +1,9 @@
 {
- "generated_at": "2026-10-03T16:20:27Z",
+ "generated_at": "2026-10-03T21:20:09Z",
  "source": "https://seismograph-weather.onrender.com/v1/weather",
  "reachable": true,
  "stale_after_hours": 30.0,
- "observations": 53,
+ "observations": 55,
  "models": [
   {
    "model_tuple": "google/gemini-3.5-flash-lite",
@@ -197,24 +197,29 @@
      "t": "2026-10-03T11:43:01Z",
      "rate": 0.9487222222222222,
      "age": 1.228108641388889
+    },
+    {
+     "t": "2026-10-03T21:20:09Z",
+     "rate": 0.9464999999999998,
+     "age": 1.4172694627777778
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 5.852052269444444,
-   "json_success_rate": 0.9487222222222222,
-   "avg_output_length": 132.09067,
+   "window_age_hours": 1.4172694627777778,
+   "json_success_rate": 0.9464999999999998,
+   "avg_output_length": 131.82829999999998,
    "sample_count": 10,
    "last_alert_timestamp": null,
-   "window_end": "2026-10-03T10:29:19.859524Z",
-   "history_points": 38,
+   "window_end": "2026-10-03T19:55:07.678718Z",
+   "history_points": 39,
    "baseline_required": 8,
    "cusum_h": 5.0,
    "calibrated": true,
-   "mu0": 0.979194,
-   "sigma0": 0.012192,
-   "z": -2.5,
-   "cusum": 4.6073,
-   "cusum_pct": 92.1,
+   "mu0": 0.977128,
+   "sigma0": 0.014017,
+   "z": -2.19,
+   "cusum": 4.8423,
+   "cusum_pct": 96.8,
    "cusum_trace": [
     0.0,
     0.0,
@@ -231,18 +236,18 @@
     0.0,
     0.0,
     0.0,
-    0.0,
-    0.2769,
-    0.5539,
-    2.6079,
-    4.6073
+    0.0283,
+    0.0567,
+    1.6307,
+    3.1572,
+    4.8423
    ],
    "checks": [
     {
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 5.9h vs 30h threshold"
+     "detail": "window age 1.4h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -254,19 +259,19 @@
      "id": "band",
      "label": "JSON fidelity in band",
      "state": "yes",
-     "detail": "z = -2.5 sigma from baseline"
+     "detail": "z = -2.19 sigma from baseline"
     },
     {
      "id": "length",
      "label": "Output length reported",
      "state": "yes",
-     "detail": "132.1 tokens avg"
+     "detail": "131.8 tokens avg"
     },
     {
      "id": "cusum",
      "label": "CUSUM below threshold",
      "state": "yes",
-     "detail": "S- 4.6073 / h 5.0"
+     "detail": "S- 4.8423 / h 5.0"
     },
     {
      "id": "quorum",
@@ -356,36 +361,42 @@
      "t": "2026-10-03T11:43:01Z",
      "rate": 0.9932777777777778,
      "age": 1.290164148611111
+    },
+    {
+     "t": "2026-10-03T21:20:09Z",
+     "rate": 0.9932777777777778,
+     "age": 1.4794794133333333
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 5.914103888055555,
+   "window_age_hours": 1.4794794133333333,
    "json_success_rate": 0.9932777777777778,
-   "avg_output_length": 93.08091,
+   "avg_output_length": 93.80015,
    "sample_count": 10,
    "last_alert_timestamp": null,
-   "window_end": "2026-10-03T10:25:36.482195Z",
-   "history_points": 15,
+   "window_end": "2026-10-03T19:51:23.739661Z",
+   "history_points": 16,
    "baseline_required": 8,
    "cusum_h": 5.0,
    "calibrated": true,
-   "mu0": 0.975826,
-   "sigma0": 0.011578,
-   "z": 1.51,
+   "mu0": 0.976917,
+   "sigma0": 0.012006,
+   "z": 1.36,
    "cusum": 0.0,
    "cusum_pct": 0.0,
    "cusum_trace": [
     0.0,
     0.0,
-    0.1088,
-    0.875,
-    1.5308,
-    1.9563,
-    2.3818,
-    2.9608,
-    2.4074,
-    1.8491,
-    0.9262,
+    0.1779,
+    0.9898,
+    1.6952,
+    2.1785,
+    2.6619,
+    3.2933,
+    2.8326,
+    2.3673,
+    1.5503,
+    0.3215,
     0.0,
     0.0,
     0.0,
@@ -396,7 +407,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 5.9h vs 30h threshold"
+     "detail": "window age 1.5h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -408,13 +419,13 @@
      "id": "band",
      "label": "JSON fidelity in band",
      "state": "yes",
-     "detail": "z = 1.51 sigma from baseline"
+     "detail": "z = 1.36 sigma from baseline"
     },
     {
      "id": "length",
      "label": "Output length reported",
      "state": "yes",
-     "detail": "93.1 tokens avg"
+     "detail": "93.8 tokens avg"
     },
     {
      "id": "cusum",
