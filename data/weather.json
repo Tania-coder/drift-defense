@@ -1,18 +1,13 @@
 {
- "generated_at": "2026-10-05T05:45:46Z",
+ "generated_at": "2026-10-05T14:45:58Z",
  "source": "https://seismograph-weather.onrender.com/v1/weather",
  "reachable": true,
  "stale_after_hours": 30.0,
- "observations": 59,
+ "observations": 61,
  "models": [
   {
    "model_tuple": "google/gemini-3.5-flash-lite",
    "series": [
-    {
-     "t": "2026-09-14T12:53:08Z",
-     "rate": 0.9724999999999999,
-     "age": 2.1595898236111113
-    },
     {
      "t": "2026-09-14T21:51:51Z",
      "rate": 0.9716111111111111,
@@ -207,23 +202,28 @@
      "t": "2026-10-04T21:30:37Z",
      "rate": 0.9556111111111111,
      "age": 1.2533874269444445
+    },
+    {
+     "t": "2026-10-05T14:45:58Z",
+     "rate": 0.9545555555555557,
+     "age": 2.3155087680555555
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 9.505862197222221,
-   "json_success_rate": 0.9556111111111111,
-   "avg_output_length": 130.66285,
+   "window_age_hours": 2.3155087680555555,
+   "json_success_rate": 0.9545555555555557,
+   "avg_output_length": 130.50041,
    "sample_count": 10,
    "last_alert_timestamp": null,
-   "window_end": "2026-10-04T20:15:25.111996Z",
-   "history_points": 41,
+   "window_end": "2026-10-05T12:27:02.180122Z",
+   "history_points": 42,
    "baseline_required": 8,
    "cusum_h": 5.0,
    "calibrated": true,
-   "mu0": 0.973706,
-   "sigma0": 0.014884,
-   "z": -1.22,
-   "cusum": 5.2656,
+   "mu0": 0.971958,
+   "sigma0": 0.014983,
+   "z": -1.16,
+   "cusum": 5.2927,
    "cusum_pct": 100.0,
    "cusum_trace": [
     0.0,
@@ -240,19 +240,19 @@
     0.0,
     0.0,
     0.0,
-    0.0,
-    1.2233,
-    2.4018,
-    3.7297,
-    4.5499,
-    5.2656
+    1.0953,
+    2.1461,
+    3.3453,
+    4.0401,
+    4.6312,
+    5.2927
    ],
    "checks": [
     {
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 9.5h vs 30h threshold"
+     "detail": "window age 2.3h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -264,19 +264,19 @@
      "id": "band",
      "label": "JSON fidelity in band",
      "state": "yes",
-     "detail": "z = -1.22 sigma from baseline"
+     "detail": "z = -1.16 sigma from baseline"
     },
     {
      "id": "length",
      "label": "Output length reported",
      "state": "yes",
-     "detail": "130.7 tokens avg"
+     "detail": "130.5 tokens avg"
     },
     {
      "id": "cusum",
      "label": "CUSUM below threshold",
      "state": "no",
-     "detail": "S- 5.2656 / h 5.0"
+     "detail": "S- 5.2927 / h 5.0"
     },
     {
      "id": "quorum",
@@ -381,37 +381,43 @@
      "t": "2026-10-04T21:30:37Z",
      "rate": 0.9916111111111112,
      "age": 1.3167890097222223
+    },
+    {
+     "t": "2026-10-05T14:45:58Z",
+     "rate": 0.9821666666666667,
+     "age": 2.4709843736111115
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 9.56926423638889,
-   "json_success_rate": 0.9916111111111112,
-   "avg_output_length": 92.68272,
+   "window_age_hours": 2.4709843736111115,
+   "json_success_rate": 0.9821666666666667,
+   "avg_output_length": 91.28748,
    "sample_count": 10,
    "last_alert_timestamp": null,
-   "window_end": "2026-10-04T20:11:36.881771Z",
-   "history_points": 18,
+   "window_end": "2026-10-05T12:17:42.479889Z",
+   "history_points": 19,
    "baseline_required": 8,
    "cusum_h": 5.0,
    "calibrated": true,
-   "mu0": 0.978682,
-   "sigma0": 0.0124,
-   "z": 1.04,
+   "mu0": 0.978865,
+   "sigma0": 0.012077,
+   "z": 0.27,
    "cusum": 0.0,
    "cusum_pct": 0.0,
    "cusum_trace": [
     0.0,
     0.0,
-    0.2988,
-    1.2113,
-    2.0209,
-    2.6154,
-    3.2098,
-    3.9477,
-    3.6281,
-    3.3041,
-    2.6396,
-    1.5763,
+    0.3353,
+    1.3008,
+    2.1606,
+    2.7995,
+    3.4384,
+    4.2245,
+    3.925,
+    3.6209,
+    2.9671,
+    1.904,
+    0.2106,
     0.0,
     0.0,
     0.0,
@@ -424,7 +430,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 9.6h vs 30h threshold"
+     "detail": "window age 2.5h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -436,13 +442,13 @@
      "id": "band",
      "label": "JSON fidelity in band",
      "state": "yes",
-     "detail": "z = 1.04 sigma from baseline"
+     "detail": "z = 0.27 sigma from baseline"
     },
     {
      "id": "length",
      "label": "Output length reported",
      "state": "yes",
-     "detail": "92.7 tokens avg"
+     "detail": "91.3 tokens avg"
     },
     {
      "id": "cusum",
