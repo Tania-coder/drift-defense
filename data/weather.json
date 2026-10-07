@@ -1,7 +1,7 @@
 {
  "generated_at": "2026-10-06T18:24:45Z",
  "source": "https://seismograph-weather.onrender.com/v1/weather",
- "reachable": true,
+ "reachable": false,
  "stale_after_hours": 30.0,
  "observations": 65,
  "models": [
@@ -478,5 +478,7 @@
    "no_count": 0,
    "unknown_count": 0
   }
- ]
+ ],
+ "error": "The read operation timed out",
+ "checked_at": "2026-10-07T06:05:35Z"
 }
