@@ -1,18 +1,13 @@
 {
- "generated_at": "2026-10-27T18:05:55Z",
+ "generated_at": "2026-10-27T22:16:56Z",
  "source": "https://seismograph-weather.onrender.com/v1/weather",
  "reachable": true,
  "stale_after_hours": 30.0,
- "observations": 96,
+ "observations": 97,
  "models": [
   {
    "model_tuple": "google/gemini-3.5-flash-lite",
    "series": [
-    {
-     "t": "2026-10-01T22:43:46Z",
-     "rate": 0.9697222222222223,
-     "age": 0.8296895413888888
-    },
     {
      "t": "2026-10-02T12:40:48Z",
      "rate": 0.9697222222222223,
@@ -207,40 +202,45 @@
      "t": "2026-10-27T12:16:48Z",
      "rate": 0.9849444444444444,
      "age": 1.6283120241666666
+    },
+    {
+     "t": "2026-10-27T22:16:56Z",
+     "rate": 0.9888888888888889,
+     "age": 0.872286873611111
     }
    ],
    "status": "STABLE",
-   "window_age_hours": 7.446980318888889,
-   "json_success_rate": 0.9849444444444444,
-   "avg_output_length": 129.76517,
+   "window_age_hours": 0.872286873611111,
+   "json_success_rate": 0.9888888888888889,
+   "avg_output_length": 130.20303,
    "sample_count": 10,
    "last_alert_timestamp": null,
-   "window_end": "2026-10-27T10:39:05.979669Z",
-   "history_points": 74,
+   "window_end": "2026-10-27T21:24:36.205582Z",
+   "history_points": 75,
    "baseline_required": 8,
    "cusum_h": 5.0,
    "calibrated": true,
-   "mu0": 0.977356,
-   "sigma0": 0.006073,
-   "z": 1.25,
+   "mu0": 0.977989,
+   "sigma0": 0.006588,
+   "z": 1.65,
    "cusum": 0.0,
    "cusum_pct": 0.0,
    "cusum_trace": [
     0.0,
     0.0,
     0.0,
+    1.05,
+    1.9651,
+    2.8802,
+    2.6906,
+    2.2732,
+    1.9486,
+    2.2228,
+    2.497,
+    2.7712,
+    3.0454,
+    1.3883,
     0.0,
-    1.077,
-    2.0077,
-    2.9383,
-    2.6706,
-    2.156,
-    1.742,
-    1.9774,
-    2.2129,
-    2.4483,
-    2.6838,
-    0.8245,
     0.0,
     0.0,
     0.0,
@@ -252,7 +252,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "yes",
-     "detail": "window age 7.4h vs 30h threshold"
+     "detail": "window age 0.9h vs 30h threshold"
     },
     {
      "id": "depth",
@@ -264,13 +264,13 @@
      "id": "band",
      "label": "JSON fidelity in band",
      "state": "yes",
-     "detail": "z = 1.25 sigma from baseline"
+     "detail": "z = 1.65 sigma from baseline"
     },
     {
      "id": "length",
      "label": "Output length reported",
      "state": "yes",
-     "detail": "129.8 tokens avg"
+     "detail": "130.2 tokens avg"
     },
     {
      "id": "cusum",
@@ -404,7 +404,7 @@
     }
    ],
    "status": "STALE",
-   "window_age_hours": 486.2918922297222,
+   "window_age_hours": 490.47559525527777,
    "json_success_rate": 0.9728888888888889,
    "avg_output_length": 89.25918,
    "sample_count": 10,
@@ -446,7 +446,7 @@
      "id": "reporting",
      "label": "Leg is reporting",
      "state": "no",
-     "detail": "window age 486.3h vs 30h threshold"
+     "detail": "window age 490.5h vs 30h threshold"
     },
     {
      "id": "depth",

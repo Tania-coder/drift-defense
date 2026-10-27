@@ -94,3 +94,4 @@
 {"t":"2026-10-26T13:08:54Z","model_tuple":"google/gemini-3.5-flash-lite","status":"STABLE","json_success_rate":0.9842222222222222,"avg_output_length":130.11302,"window_age_hours":1.9453885913888889,"window_end":"2026-10-26T11:12:11.489398Z"}
 {"t":"2026-10-26T22:42:32Z","model_tuple":"google/gemini-3.5-flash-lite","status":"STABLE","json_success_rate":0.9842222222222222,"avg_output_length":130.58813000000004,"window_age_hours":0.9942029200000001,"window_end":"2026-10-26T21:42:53.794906Z"}
 {"t":"2026-10-27T12:16:48Z","model_tuple":"google/gemini-3.5-flash-lite","status":"STABLE","json_success_rate":0.9849444444444444,"avg_output_length":129.76517,"window_age_hours":1.6283120241666666,"window_end":"2026-10-27T10:39:05.979669Z"}
+{"t":"2026-10-27T22:16:56Z","model_tuple":"google/gemini-3.5-flash-lite","status":"STABLE","json_success_rate":0.9888888888888889,"avg_output_length":130.20303,"window_age_hours":0.872286873611111,"window_end":"2026-10-27T21:24:36.205582Z"}
